@@ -68,6 +68,9 @@
     <button id="launchButton">Launch Firework!</button>
     <div id="message">🎇 Happy Diwali 🎇</div>
 
+    <!-- Firework sound -->
+    <audio id="fireworkSound" src="firework-sound.mp3"></audio>
+
     <script>
         document.getElementById('launchButton').addEventListener('click', function() {
             launchRocket();
@@ -88,6 +91,11 @@
             const fireworksCount = 70;
             const x = window.innerWidth / 2;
             const y = window.innerHeight * 0.2;
+
+            // Play firework sound
+            const fireworkSound = document.getElementById('fireworkSound');
+            fireworkSound.currentTime = 0; // Reset sound to start
+            fireworkSound.play();
 
             for (let i = 0; i < fireworksCount; i++) {
                 createFirework(x, y);
