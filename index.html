@@ -1,29 +1,75 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FindYou - Job Application Website</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="apply.html">Apply for a Job</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <h1>Welcome to FindYou</h1>
-      <p>We're a recruitment agency dedicated to finding the best talent for your business.</p>
-      <button>Learn More</button>
-    </main>
-    <footer>
-      <p>&copy; 2024 FindYou. All rights reserved.</p>
-    </footer>
-  </body>
+    <title>Happy Diwali</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: gold;
+            font-size: 3em;
+            display: none;
+        }
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+            animation: explode 1.5s ease-out forwards;
+        }
+        @keyframes explode {
+            0% { opacity: 1; }
+            100% { opacity: 0; transform: scale(4); }
+        }
+    </style>
+</head>
+<body>
+    <div id="message">🎆 Happy Diwali 🎆</div>
+
+    <script>
+        document.body.addEventListener('click', function(event) {
+            const fireworksCount = 50;
+            const x = event.clientX;
+            const y = event.clientY;
+            
+            for (let i = 0; i < fireworksCount; i++) {
+                createFirework(x, y);
+            }
+
+            const message = document.getElementById('message');
+            message.style.display = 'block';
+            setTimeout(() => { message.style.display = 'none'; }, 2000);
+        });
+
+        function createFirework(x, y) {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            document.body.appendChild(firework);
+            
+            const angle = Math.random() * 2 * Math.PI;
+            const distance = Math.random() * 100 + 50;
+            const offsetX = Math.cos(angle) * distance;
+            const offsetY = Math.sin(angle) * distance;
+            
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+            
+            firework.addEventListener('animationend', () => {
+                firework.remove();
+            });
+        }
+    </script>
+</body>
 </html>
