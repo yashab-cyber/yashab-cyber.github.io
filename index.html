@@ -6,59 +6,73 @@
     <title>Cybersecurity Workshop Enrollment</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4; }
-        .container { max-width: 700px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .container { max-width: 600px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1 { color: #007BFF; }
         p { font-size: 18px; }
-        .steps { display: flex; justify-content: space-around; margin: 20px 0; }
-        .step { text-align: center; width: 30%; }
-        .step img { width: 60px; height: 60px; margin-bottom: 10px; }
-        button { background: #28a745; color: white; padding: 12px 20px; font-size: 18px; border: none; cursor: pointer; border-radius: 5px; transition: 0.3s; }
-        button:hover { background: #218838; transform: scale(1.05); }
-        .footer { margin-top: 20px; font-size: 16px; color: #555; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; }
+        button { background: #28a745; color: white; cursor: pointer; border: none; transition: 0.3s; }
+        button:hover { background: #218838; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🚀 7-Day Cybersecurity Workshop</h1>
-    <p>🔒 Learn Ethical Hacking, Cybersecurity & Pentesting from Experts</p>
-    <h3>📅 Date: [Your Workshop Date]</h3>
-    <h3>⏳ Duration: 7 Days (Live + Recorded Sessions)</h3>
+    <p>🔒 Learn Ethical Hacking, Cybersecurity & Pentesting</p>
     <h3>💰 Fee: ₹250/-</h3>
 
-    <h2>How to Enroll?</h2>
-    <div class="steps">
-        <div class="step">
-            <img src="https://cdn-icons-png.flaticon.com/512/109/109661.png" alt="Pay">
-            <h3>Step 1: Pay ₹250</h3>
-        </div>
-        <div class="step">
-            <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Form">
-            <h3>Step 2: Submit Details</h3>
-        </div>
-        <div class="step">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077976.png" alt="Join">
-            <h3>Step 3: Join WhatsApp</h3>
-        </div>
+    <div id="step1">
+        <h2>Step 1: Fill Your Details</h2>
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <button onclick="goToPayment()">Submit & Proceed to Payment</button>
     </div>
 
-    <h2>Step 1: Pay the Enrollment Fee</h2>
-    <a href="YOUR_RAZORPAY_PAYMENT_LINK" target="_blank">
-        <button>🔗 Pay ₹250 Now</button>
-    </a>
+    <div id="step2" class="hidden">
+        <h2>Step 2: Make Payment</h2>
+        <p>Click below to pay ₹250</p>
+        <button onclick="redirectToPayment()">Pay Now</button>
+    </div>
 
-    <h2>Step 2: Submit Your Details</h2>
-    <a href="YOUR_GOOGLE_FORM_LINK" target="_blank">
-        <button style="background:#007BFF;">📋 Fill Enrollment Form</button>
-    </a>
-
-    <h2>Step 3: Join WhatsApp Group</h2>
-    <a href="YOUR_WHATSAPP_GROUP_LINK" target="_blank">
-        <button style="background:#FF9900;">📱 Join Now</button>
-    </a>
-
-    <p class="footer">📩 Need help? Contact: <strong>your-email@example.com</strong></p>
+    <div id="step3" class="hidden">
+        <h2>Step 3: Join WhatsApp Group</h2>
+        <p>Thank you for registering! Click below to join our exclusive WhatsApp group:</p>
+        <a href="YOUR_WHATSAPP_GROUP_LINK" target="_blank">
+            <button style="background:#FF9900;">📱 Join Now</button>
+        </a>
+    </div>
 </div>
+
+<script>
+    function goToPayment() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+
+        if (name === "" || email === "" || phone === "") {
+            alert("Please fill all details!");
+            return;
+        }
+
+        localStorage.setItem("userName", name);
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userPhone", phone);
+
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+    }
+
+    function redirectToPayment() {
+        window.location.href = "YOUR_RAZORPAY_PAYMENT_LINK";
+        
+        setTimeout(() => {
+            document.getElementById("step2").classList.add("hidden");
+            document.getElementById("step3").classList.remove("hidden");
+        }, 5000);
+    }
+</script>
 
 </body>
 </html>
