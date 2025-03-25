@@ -3,127 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Diwali</title>
+    <title>Cybersecurity Workshop Enrollment</title>
     <style>
-        body {
-            margin: 0;
-            background-color: black;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-        #launchButton {
-            padding: 15px 30px;
-            font-size: 1.5em;
-            cursor: pointer;
-            background-color: gold;
-            border: none;
-            border-radius: 10px;
-            color: black;
-            font-weight: bold;
-        }
-        #message {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3em;
-            color: gold;
-            display: none;
-        }
-        .rocket {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            width: 10px;
-            height: 30px;
-            background-color: red;
-            border-radius: 5px;
-            transform: translateX(-50%);
-            animation: fly 1.5s ease-out forwards;
-        }
-        .firework {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: white;
-            border-radius: 50%;
-            animation: explode 1.5s ease-out forwards;
-        }
-        @keyframes fly {
-            0% { bottom: 20px; }
-            100% { bottom: 80%; }
-        }
-        @keyframes explode {
-            0% { opacity: 1; }
-            100% { opacity: 0; transform: scale(4); }
-        }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4; }
+        .container { max-width: 700px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #007BFF; }
+        p { font-size: 18px; }
+        .steps { display: flex; justify-content: space-around; margin: 20px 0; }
+        .step { text-align: center; width: 30%; }
+        .step img { width: 60px; height: 60px; margin-bottom: 10px; }
+        button { background: #28a745; color: white; padding: 12px 20px; font-size: 18px; border: none; cursor: pointer; border-radius: 5px; transition: 0.3s; }
+        button:hover { background: #218838; transform: scale(1.05); }
+        .footer { margin-top: 20px; font-size: 16px; color: #555; }
     </style>
 </head>
 <body>
-    <button id="launchButton">Launch Firework!</button>
-    <div id="message">🎇 Happy Diwali 🎇</div>
 
-    <!-- Firework sound -->
-    <audio id="fireworkSound" src="fireworks-close-29630.mp3"></audio>
+<div class="container">
+    <h1>🚀 7-Day Cybersecurity Workshop</h1>
+    <p>🔒 Learn Ethical Hacking, Cybersecurity & Pentesting from Experts</p>
+    <h3>📅 Date: [Your Workshop Date]</h3>
+    <h3>⏳ Duration: 7 Days (Live + Recorded Sessions)</h3>
+    <h3>💰 Fee: ₹250/-</h3>
 
-    <script>
-        document.getElementById('launchButton').addEventListener('click', function() {
-            launchRocket();
-        });
+    <h2>How to Enroll?</h2>
+    <div class="steps">
+        <div class="step">
+            <img src="https://cdn-icons-png.flaticon.com/512/109/109661.png" alt="Pay">
+            <h3>Step 1: Pay ₹250</h3>
+        </div>
+        <div class="step">
+            <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Form">
+            <h3>Step 2: Submit Details</h3>
+        </div>
+        <div class="step">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077976.png" alt="Join">
+            <h3>Step 3: Join WhatsApp</h3>
+        </div>
+    </div>
 
-        function launchRocket() {
-            const rocket = document.createElement('div');
-            rocket.classList.add('rocket');
-            document.body.appendChild(rocket);
+    <h2>Step 1: Pay the Enrollment Fee</h2>
+    <a href="YOUR_RAZORPAY_PAYMENT_LINK" target="_blank">
+        <button>🔗 Pay ₹250 Now</button>
+    </a>
 
-            rocket.addEventListener('animationend', () => {
-                rocket.remove();
-                explodeFirework();
-            });
-        }
+    <h2>Step 2: Submit Your Details</h2>
+    <a href="YOUR_GOOGLE_FORM_LINK" target="_blank">
+        <button style="background:#007BFF;">📋 Fill Enrollment Form</button>
+    </a>
 
-        function explodeFirework() {
-            const fireworksCount = 70;
-            const x = window.innerWidth / 2;
-            const y = window.innerHeight * 0.2;
+    <h2>Step 3: Join WhatsApp Group</h2>
+    <a href="YOUR_WHATSAPP_GROUP_LINK" target="_blank">
+        <button style="background:#FF9900;">📱 Join Now</button>
+    </a>
 
-            // Play firework sound
-            const fireworkSound = document.getElementById('fireworkSound');
-            fireworkSound.currentTime = 0; // Reset sound to start
-            fireworkSound.play();
+    <p class="footer">📩 Need help? Contact: <strong>your-email@example.com</strong></p>
+</div>
 
-            for (let i = 0; i < fireworksCount; i++) {
-                createFirework(x, y);
-            }
-
-            const message = document.getElementById('message');
-            message.style.display = 'block';
-            setTimeout(() => { message.style.display = 'none'; }, 2000);
-        }
-
-        function createFirework(x, y) {
-            const firework = document.createElement('div');
-            firework.classList.add('firework');
-            document.body.appendChild(firework);
-
-            const angle = Math.random() * 2 * Math.PI;
-            const distance = Math.random() * 120 + 60;
-            const offsetX = Math.cos(angle) * distance;
-            const offsetY = Math.sin(angle) * distance;
-
-            firework.style.left = `${x}px`;
-            firework.style.top = `${y}px`;
-            firework.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-
-            firework.addEventListener('animationend', () => {
-                firework.remove();
-            });
-        }
-    </script>
 </body>
 </html>
