@@ -9,9 +9,10 @@
         .container { max-width: 600px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1 { color: #007BFF; }
         p { font-size: 18px; }
-        input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; }
-        button { background: #28a745; color: white; cursor: pointer; border: none; transition: 0.3s; }
-        button:hover { background: #218838; }
+        button, a { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; font-size: 16px; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #007BFF; color: white; border: none; }
+        .btn-success { background: #28a745; color: white; border: none; }
+        .btn-warning { background: #FF9900; color: white; border: none; }
         .hidden { display: none; }
     </style>
 </head>
@@ -24,53 +25,39 @@
 
     <div id="step1">
         <h2>Step 1: Fill Your Details</h2>
-        <input type="text" id="name" placeholder="Full Name" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
-        <button onclick="goToPayment()">Submit & Proceed to Payment</button>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUTUxVid0pS53YRyfHz7cJlNBGP6bsI6j73dU_trZC5ctvdg/viewform?usp=dialog" target="_blank">
+            <button class="btn-primary">📋 Fill Enrollment Form</button>
+        </a>
+        <button class="btn-success" onclick="goToPayment()">✅ I've Submitted, Proceed to Payment</button>
     </div>
 
     <div id="step2" class="hidden">
         <h2>Step 2: Make Payment</h2>
         <p>Click below to pay ₹250</p>
-        <button onclick="redirectToPayment()">Pay Now</button>
+        <a href="YOUR_RAZORPAY_PAYMENT_LINK" target="_blank">
+            <button class="btn-success">💳 Pay Now</button>
+        </a>
+        <button class="btn-warning" onclick="showWhatsApp()">✅ I've Paid, Show Group Link</button>
     </div>
 
     <div id="step3" class="hidden">
         <h2>Step 3: Join WhatsApp Group</h2>
         <p>Thank you for registering! Click below to join our exclusive WhatsApp group:</p>
         <a href="YOUR_WHATSAPP_GROUP_LINK" target="_blank">
-            <button style="background:#FF9900;">📱 Join Now</button>
+            <button class="btn-warning">📱 Join Now</button>
         </a>
     </div>
 </div>
 
 <script>
     function goToPayment() {
-        let name = document.getElementById("name").value;
-        let email = document.getElementById("email").value;
-        let phone = document.getElementById("phone").value;
-
-        if (name === "" || email === "" || phone === "") {
-            alert("Please fill all details!");
-            return;
-        }
-
-        localStorage.setItem("userName", name);
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("userPhone", phone);
-
         document.getElementById("step1").classList.add("hidden");
         document.getElementById("step2").classList.remove("hidden");
     }
 
-    function redirectToPayment() {
-        window.location.href = "YOUR_RAZORPAY_PAYMENT_LINK";
-        
-        setTimeout(() => {
-            document.getElementById("step2").classList.add("hidden");
-            document.getElementById("step3").classList.remove("hidden");
-        }, 5000);
+    function showWhatsApp() {
+        document.getElementById("step2").classList.add("hidden");
+        document.getElementById("step3").classList.remove("hidden");
     }
 </script>
 
