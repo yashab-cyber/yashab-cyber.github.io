@@ -13,7 +13,6 @@
         .btn-primary { background: #007BFF; color: white; border: none; }
         .btn-success { background: #28a745; color: white; border: none; }
         .btn-warning { background: #FF9900; color: white; border: none; }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -23,41 +22,42 @@
     <p>🔒 Learn Ethical Hacking, Cybersecurity & Pentesting</p>
     <h3>💰 Fee: ₹250/-</h3>
 
-    <div id="step1">
-        <h2>Step 1: Fill Your Details</h2>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUTUxVid0pS53YRyfHz7cJlNBGP6bsI6j73dU_trZC5ctvdg/viewform?usp=dialog" target="_blank">
-            <button class="btn-primary">📋 Fill Enrollment Form</button>
-        </a>
-        <button class="btn-success" onclick="goToPayment()">✅ I've Submitted, Proceed to Payment</button>
-    </div>
+    <h2>Step 1: Fill Your Details</h2>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUTUxVid0pS53YRyfHz7cJlNBGP6bsI6j73dU_trZC5ctvdg/viewform?usp=dialog" target="_blank">
+        <button class="btn-primary">📋 Fill Enrollment Form</button>
+    </a>
 
-    <div id="step2" class="hidden">
-        <h2>Step 2: Make Payment</h2>
-        <p>Click below to pay ₹250</p>
-        <a href="YOUR_RAZORPAY_PAYMENT_LINK" target="_blank">
-            <button class="btn-success">💳 Pay Now</button>
-        </a>
-        <button class="btn-warning" onclick="showWhatsApp()">✅ I've Paid, Show Group Link</button>
-    </div>
+    <h2>Step 2: Make Payment</h2>
+    <p>Click below to pay ₹250</p>
+    <a href="YOUR_RAZORPAY_PAYMENT_LINK" target="_blank">
+        <button class="btn-success">💳 Pay Now</button>
+    </a>
 
-    <div id="step3" class="hidden">
-        <h2>Step 3: Join WhatsApp Group</h2>
-        <p>Thank you for registering! Click below to join our exclusive WhatsApp group:</p>
-        <a href="YOUR_WHATSAPP_GROUP_LINK" target="_blank">
-            <button class="btn-warning">📱 Join Now</button>
-        </a>
-    </div>
+    <h2>Step 3: Verify Payment & Get WhatsApp Link</h2>
+    <input type="text" id="email" placeholder="Enter your registered email" required>
+    <button class="btn-warning" onclick="verifyPayment()">✅ Verify Payment</button>
+
+    <div id="result"></div>
 </div>
 
 <script>
-    function goToPayment() {
-        document.getElementById("step1").classList.add("hidden");
-        document.getElementById("step2").classList.remove("hidden");
-    }
+    function verifyPayment() {
+        let email = document.getElementById("email").value;
+        if (email === "") {
+            alert("Please enter your registered email.");
+            return;
+        }
 
-    function showWhatsApp() {
-        document.getElementById("step2").classList.add("hidden");
-        document.getElementById("step3").classList.remove("hidden");
+        fetch('verify_payment.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'email=' + encodeURIComponent(email)
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("result").innerHTML = data;
+        })
+        .catch(error => console.error('Error:', error));
     }
 </script>
 
