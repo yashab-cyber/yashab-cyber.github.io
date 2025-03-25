@@ -3,63 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Workshop Enrollment</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4; }
-        .container { max-width: 600px; background: white; padding: 20px; margin: auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #007BFF; }
-        p { font-size: 18px; }
-        button, a { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; font-size: 16px; text-decoration: none; display: inline-block; }
-        .btn-primary { background: #007BFF; color: white; border: none; }
-        .btn-success { background: #28a745; color: white; border: none; }
-        .btn-warning { background: #FF9900; color: white; border: none; }
-    </style>
+    <title>Cyber Security Workshop Enrollment</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
-
-<div class="container">
-    <h1>🚀 7-Day Cybersecurity Workshop</h1>
-    <p>🔒 Learn Ethical Hacking, Cybersecurity & Pentesting</p>
-    <h3>💰 Fee: ₹250/-</h3>
-
-    <h2>Step 1: Fill Your Details</h2>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfUTUxVid0pS53YRyfHz7cJlNBGP6bsI6j73dU_trZC5ctvdg/viewform?usp=dialog" target="_blank">
-        <button class="btn-primary">📋 Fill Enrollment Form</button>
-    </a>
-
-    <h2>Step 2: Make Payment</h2>
-    <p>Click below to pay ₹250</p>
-    <a href="YOUR_RAZORPAY_PAYMENT_LINK" target="_blank">
-        <button class="btn-success">💳 Pay Now</button>
-    </a>
-
-    <h2>Step 3: Verify Payment & Get WhatsApp Link</h2>
-    <input type="text" id="email" placeholder="Enter your registered email" required>
-    <button class="btn-warning" onclick="verifyPayment()">✅ Verify Payment</button>
-
-    <div id="result"></div>
-</div>
-
-<script>
-    function verifyPayment() {
-        let email = document.getElementById("email").value;
-        if (email === "") {
-            alert("Please enter your registered email.");
-            return;
-        }
-
-        fetch('verify_payment.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'email=' + encodeURIComponent(email)
-        })
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("result").innerHTML = data;
-        })
-        .catch(error => console.error('Error:', error));
-    }
-</script>
-
+    <h1>Cyber Security 7-Day Workshop</h1>
+    <form id="enrollmentForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <button type="submit">Register & Pay ₹250</button>
+    </form>
+    <br>
+    <input type="email" id="emailCheck" placeholder="Enter email to verify payment">
+    <button onclick="checkPaymentStatus()">🔍 Verify Payment</button>
+    <div id="joinLink"></div>
+    <script src="script.js"></script>
 </body>
 </html>
