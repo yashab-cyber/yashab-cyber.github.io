@@ -3,37 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEWIS Activation & Profile Setup</title>
+    <title>LEWIS Login Key Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <img src="logo.png" alt="LEWIS Logo" id="logo" data-ai-hint="cybersecurity logo">
-            <h1>LEWIS Profile & Login Key</h1>
-            <p>Create your LEWIS profile identifier and generate your daily login key.</p>
+            <h1>LEWIS Login Key Generator</h1>
+            <p>Generate or retrieve your login key for the LEWIS application.</p>
         </header>
         <main>
             <div class="profile-preview">
-                <div id="avatarPreview" class="avatar-placeholder">LP</div> <!-- LP for Lewis Profile -->
+                <div id="avatarPreview" class="avatar-placeholder">LP</div>
             </div>
 
             <div class="input-group">
-                <label for="profileName">Your Profile Name (for Key):</label>
-                <input type="text" id="profileName" placeholder="Enter your desired profile name (e.g., ShadowStriker)">
+                <label>Select Key Type:</label>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="keyType" value="normal_demo" checked> Normal User (Demo Key)</label>
+                    <label class="radio-label"><input type="radio" name="keyType" value="enterprise_demo"> Enterprise User (Demo Key)</label>
+                    <label class="radio-label"><input type="radio" name="keyType" value="daily_general"> Daily General Key</label>
+                </div>
+            </div>
+
+            <div class="input-group" id="profileNameGroup" style="display: none;">
+                <label for="profileName">Your Profile Name (for Daily Key):</label>
+                <input type="text" id="profileName" placeholder="Enter name for daily key (e.g., ShadowStriker)">
             </div>
             <div class="input-group">
                 <label for="profileEmail">Your Email (Optional for Avatar):</label>
                 <input type="email" id="profileEmail" placeholder="your.email@example.com (optional)">
-                 <small class="note-inline">Used locally to generate a consistent placeholder avatar if no image is provided by the main app.</small>
+                 <small class="note-inline">Used locally for placeholder avatar generation if main app doesn't provide one.</small>
             </div>
 
-            <button id="generateKeyBtn">Create Profile ID & Generate Key</button>
+            <button id="generateKeyBtn">Get/Generate Key</button>
 
             <div id="keyDisplay" class="key-display-area" style="display: none;">
                 <h2 id="profileConfirmation"></h2>
                 <p id="generatedKey" class="key-value"></p>
-                <p class="note">This key is valid for today only and will refresh automatically tomorrow. Copy and use this key to log in to the LEWIS application.</p>
+                <p class="note" id="keyNote"></p>
             </div>
              <div id="instructions" class="instructions-area" style="display: none;">
                 <h3>How to Use This Key:</h3>
@@ -41,7 +50,7 @@
                     <li>Copy the generated key above.</li>
                     <li>Open the main LEWIS application.</li>
                     <li>When prompted, paste this key into the "Login Key" field.</li>
-                    <li>If you see this page, it means you're setting up your local key generator. The main LEWIS app uses the keys generated here.</li>
+                    <li>Ensure you select the correct mode in the LEWIS application that corresponds to the key type you generated here.</li>
                 </ol>
             </div>
         </main>
