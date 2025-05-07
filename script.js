@@ -1,18 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generateKeyBtn = document.getElementById('generateKeyBtn');
     const profileNameInput = document.getElementById('profileName');
-    const profileEmailInput = document.getElementById('profileEmail'); // Added email input
+    const profileEmailInput = document.getElementById('profileEmail');
     const keyDisplayArea = document.getElementById('keyDisplay');
     const generatedKeyElement = document.getElementById('generatedKey');
     const profileConfirmationElement = document.getElementById('profileConfirmation');
-    const avatarPreviewElement = document.getElementById('avatarPreview'); // Avatar preview element
+    const avatarPreviewElement = document.getElementById('avatarPreview');
     const instructionsArea = document.getElementById('instructions');
-
+    const keyNoteElement = document.getElementById('keyNote');
+    const profileNameGroup = document.getElementById('profileNameGroup');
+    const keyTypeRadios = document.querySelectorAll('input[name="keyType"]');
 
     const getFormattedDate = () => {
         const today = new Date();
         const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const month = String(today.getMonth() + 1).padStart(2, '0');
         const day = String(today.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
@@ -26,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     };
 
-    // Function to generate initials for avatar preview
     const generateInitials = (name, email) => {
         if (name && name.trim()) {
             const parts = name.trim().split(/\s+/);
@@ -38,10 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (email && email.trim()) {
             return email.substring(0, 2).toUpperCase();
         }
-        return 'LP'; // Default LEWIS Profile
+        return 'LP';
     };
 
-    // Update avatar preview on input change
     const updateAvatarPreview = () => {
         const profileName = profileNameInput.value;
         const profileEmail = profileEmailInput.value;
@@ -53,32 +53,68 @@ document.addEventListener('DOMContentLoaded', () => {
     profileNameInput.addEventListener('input', updateAvatarPreview);
     profileEmailInput.addEventListener('input', updateAvatarPreview);
 
+    keyTypeRadios.forEach(radio => {
+        radio.addEventListener('change', (event) => {
+            if (event.target.value === 'daily_general') {
+                profileNameGroup.style.display = 'block';
+            } else {
+                profileNameGroup.style.display = 'none';
+            }
+            // Clear previous key display when type changes
+            keyDisplayArea.style.display = 'none';
+            instructionsArea.style.display = 'none';
+        });
+    });
+     // Initial check for profile name visibility
+    if (document.querySelector('input[name="keyType"]:checked').value === 'daily_general') {
+        profileNameGroup.style.display = 'block';
+    } else {
+        profileNameGroup.style.display = 'none';
+    }
+
 
     generateKeyBtn.addEventListener('click', () => {
+        const selectedKeyType = document.querySelector('input[name="keyType"]:checked').value;
         const profileName = profileNameInput.value.trim();
+        const profileEmail = profileEmailInput.value.trim();
+        let dailyKey = '';
+        let keyMessage = '';
+        let confirmationMessage = `Login Key:`;
 
-        if (!profileName) {
-            alert("Please enter a profile name for the key identifier.");
-            return;
+        if (selectedKeyType === 'daily_general') {
+            if (!profileName) {
+                alert("Please enter a profile name for the daily general key.");
+                return;
+            }
+            confirmationMessage = `Daily General Key for profile '${profileName}':`;
+            const formattedDate = getFormattedDate();
+            const randomSuffix = generateRandomString(8);
+            const profileKeyPart = profileName
+                .toUpperCase()
+                .replace(/[^A-Z0-9]/g, '_')
+                .substring(0, 15);
+            dailyKey = `DAILYKEY-${profileKeyPart}-${formattedDate}-${randomSuffix}`;
+            keyMessage = `This key is valid for today (${formattedDate}) only and provides general access. Copy and use this key to log in to the LEWIS application.`;
+        } else if (selectedKeyType === 'normal_demo') {
+            dailyKey = 'DEMO-KEY-NORMAL';
+            confirmationMessage = 'Normal User Demo Key:';
+            keyMessage = 'Use this key to log into LEWIS in "Normal User" mode for demonstration purposes. This is a static demo key.';
+        } else if (selectedKeyType === 'enterprise_demo') {
+            dailyKey = 'DEMO-KEY-ENTERPRISE';
+            confirmationMessage = 'Enterprise User (Admin) Demo Key:';
+            keyMessage = 'Use this key to log into LEWIS in "Enterprise Mode" for demonstration purposes (simulates admin access). This is a static demo key.';
         }
 
         if (profileConfirmationElement) {
-            profileConfirmationElement.textContent = `Login Key for profile '${profileName}':`;
+            profileConfirmationElement.textContent = confirmationMessage;
         }
-
-        const formattedDate = getFormattedDate();
-        const randomSuffix = generateRandomString(8);
-        // Sanitize profile name for key: replace non-alphanumeric with underscore, convert to uppercase, limit length
-        const profileKeyPart = profileName
-            .toUpperCase()
-            .replace(/[^A-Z0-9]/g, '_')
-            .substring(0, 15);
-
-        const dailyKey = `LEWISKEY-${profileKeyPart}-${formattedDate}-${randomSuffix}`;
+        if (keyNoteElement) {
+            keyNoteElement.textContent = keyMessage;
+        }
 
         if (generatedKeyElement) {
             generatedKeyElement.textContent = dailyKey;
-            generatedKeyElement.onclick = () => { // Allow copying key on click
+            generatedKeyElement.onclick = () => {
                 navigator.clipboard.writeText(dailyKey).then(() => {
                     alert('Key copied to clipboard!');
                 }).catch(err => {
@@ -91,12 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
             keyDisplayArea.style.display = 'block';
         }
         if (instructionsArea) {
-            instructionsArea.style.display = 'block'; // Show instructions
+            instructionsArea.style.display = 'block';
         }
 
-        updateAvatarPreview(); // Ensure avatar reflects final name
+        updateAvatarPreview();
     });
 
-    // Initialize avatar on load if there's any input already (e.g., browser autofill)
-    updateAvatarPreview();
+    updateAvatarPreview(); // Initialize avatar on load
 });
