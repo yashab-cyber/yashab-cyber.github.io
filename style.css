@@ -17,13 +17,13 @@ body {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     width: 100%;
-    max-width: 500px;
+    max-width: 550px; /* Increased max-width */
     text-align: center;
     border: 1px solid #4a4a70; /* Accent border */
 }
 
 header {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 #logo {
@@ -32,6 +32,8 @@ header {
     border-radius: 50%;
     margin-bottom: 10px;
     border: 2px solid #7f5af0; /* Purple accent for logo */
+    background-color: #333; /* Placeholder if image fails */
+    object-fit: cover;
 }
 
 h1 {
@@ -47,19 +49,43 @@ header p {
     margin-bottom: 0;
 }
 
-.input-group {
+/* Profile Preview Styling */
+.profile-preview {
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #4a4a70; /* Darker placeholder color */
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    border: 3px solid #7f5af0; /* Accent border for avatar */
+}
+
+
+.input-group {
+    margin-bottom: 18px; /* Adjusted margin */
     text-align: left;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px; /* Adjusted margin */
     font-weight: 500;
     color: #c0c0f0; /* Lighter label text */
+    font-size: 0.9em;
 }
 
-.input-group input[type="text"] {
+.input-group input[type="text"],
+.input-group input[type="email"] {
     width: calc(100% - 22px); /* Account for padding and border */
     padding: 10px;
     border: 1px solid #4a4a70;
@@ -67,6 +93,19 @@ header p {
     background-color: #1a1a2e;
     color: #e0e0e0;
     font-size: 1em;
+}
+.input-group input[type="text"]:focus,
+.input-group input[type="email"]:focus {
+    outline: none;
+    border-color: #7f5af0;
+    box-shadow: 0 0 5px #7f5af0;
+}
+
+.note-inline {
+    font-size: 0.75em;
+    color: #8c8ca8;
+    display: block;
+    margin-top: 4px;
 }
 
 button {
@@ -78,14 +117,19 @@ button {
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease;
     width: 100%;
     box-sizing: border-box;
+    margin-top: 10px; /* Added margin */
 }
 
 button:hover {
     background-color: #6b47d0; /* Darker purple on hover */
 }
+button:active {
+    transform: scale(0.98);
+}
+
 
 .key-display-area {
     margin-top: 25px;
@@ -93,6 +137,7 @@ button:hover {
     background-color: #1a1a2e; /* Darker background for key display */
     border-radius: 5px;
     border: 1px dashed #4a4a70;
+    cursor: pointer; /* Indicate it's clickable to copy */
 }
 
 .key-display-area h2 { /* Used for profileConfirmation */
@@ -121,6 +166,32 @@ button:hover {
     margin-top: 15px;
 }
 
+/* Instructions Area */
+.instructions-area {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #2c2c4a; /* Slightly different background */
+    border-radius: 5px;
+    text-align: left;
+    color: #c0c0f0;
+}
+.instructions-area h3 {
+    color: #7f5af0;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+.instructions-area ol {
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+.instructions-area ol li {
+    margin-bottom: 5px;
+}
+
+
 footer {
     margin-top: 30px;
     font-size: 0.8em;
@@ -130,15 +201,25 @@ footer {
 /* Responsive adjustments */
 @media (max-width: 600px) {
     .container {
-        padding: 20px;
+        padding: 20px 15px; /* Adjusted padding */
     }
     h1 {
-        font-size: 1.6em;
+        font-size: 1.5em; /* Adjusted size */
     }
-    button, .input-group input[type="text"] {
+    .input-group input[type="text"],
+    .input-group input[type="email"],
+    button {
         font-size: 0.95em;
     }
      .key-display-area h2 {
         font-size: 1em;
+    }
+    .key-value {
+        font-size: 1em; /* Adjusted for mobile */
+    }
+    .avatar-placeholder {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8em;
     }
 }
