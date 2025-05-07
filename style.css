@@ -1,0 +1,144 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a2e; /* Dark blue-purple background */
+    color: #e0e0e0; /* Light gray text */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #24243e; /* Slightly lighter card background */
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    border: 1px solid #4a4a70; /* Accent border */
+}
+
+header {
+    margin-bottom: 25px;
+}
+
+#logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid #7f5af0; /* Purple accent for logo */
+}
+
+h1 {
+    color: #7f5af0; /* Purple accent for main heading */
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.8em;
+}
+
+header p {
+    font-size: 0.95em;
+    color: #a0a0d0; /* Lighter text for description */
+    margin-bottom: 0;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #c0c0f0; /* Lighter label text */
+}
+
+.input-group input[type="text"] {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #4a4a70;
+    border-radius: 5px;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 1em;
+}
+
+button {
+    background-color: #7f5af0; /* Purple button */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #6b47d0; /* Darker purple on hover */
+}
+
+.key-display-area {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #1a1a2e; /* Darker background for key display */
+    border-radius: 5px;
+    border: 1px dashed #4a4a70;
+}
+
+.key-display-area h2 { /* Used for profileConfirmation */
+    margin-top: 0;
+    color: #7f5af0; /* Purple */
+    font-size: 1.1em; /* Slightly smaller for confirmation message */
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.key-value {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+    color: #a7d129; /* Neon green for the key */
+    word-break: break-all;
+    padding: 8px;
+    background-color: #202030;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-top: 5px; /* Add some space above the key if profile message is present */
+}
+
+.note {
+    font-size: 0.85em;
+    color: #a0a0d0; /* Lighter note text */
+    margin-top: 15px;
+}
+
+footer {
+    margin-top: 30px;
+    font-size: 0.8em;
+    color: #606090; /* Muted footer text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.6em;
+    }
+    button, .input-group input[type="text"] {
+        font-size: 0.95em;
+    }
+     .key-display-area h2 {
+        font-size: 1em;
+    }
+}
