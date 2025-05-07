@@ -101,6 +101,52 @@ header p {
     box-shadow: 0 0 5px #7f5af0;
 }
 
+/* Radio Button Styling */
+.radio-group {
+    display: flex;
+    flex-direction: column; /* Stack radios vertically */
+    gap: 8px; /* Space between radio options */
+    margin-top: 5px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: #c0c0f0;
+    cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 8px;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #7f5af0;
+    border-radius: 50%;
+    outline: none;
+    transition: 0.2s all linear;
+    position: relative; /* For custom dot */
+}
+
+.radio-label input[type="radio"]:checked {
+    border-color: #a7d129; /* Neon green when checked */
+}
+
+.radio-label input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #a7d129; /* Neon green dot */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
 .note-inline {
     font-size: 0.75em;
     color: #8c8ca8;
@@ -221,5 +267,11 @@ footer {
         width: 70px;
         height: 70px;
         font-size: 1.8em;
+    }
+    .radio-group {
+        gap: 10px; /* Slightly more space for touch */
+    }
+    .radio-label {
+        font-size: 0.85em;
     }
 }
