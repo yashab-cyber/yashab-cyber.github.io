@@ -1,63 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEWIS Login Key Generator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yashab Alam | About Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Fira Code', monospace;
+      line-height: 1.6;
+      background-color: #0a0f1a;
+      color: #e0e6f1;
+      padding: 2rem;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeIn 2s ease-in;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #58a6ff;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      color: #00ffd5;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    section {
+      max-width: 800px;
+      margin: auto;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .contact {
+      margin-top: 2rem;
+    }
+
+    .highlight {
+      color: #ffa657;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <img src="logo.png" alt="LEWIS Logo" id="logo" data-ai-hint="cybersecurity logo">
-            <h1>LEWIS Login Key Generator</h1>
-            <p>Generate or retrieve your login key for the LEWIS application.</p>
-        </header>
-        <main>
-            <div class="profile-preview">
-                <div id="avatarPreview" class="avatar-placeholder">LP</div>
-            </div>
+  <header>
+    <h1>Yashab Alam</h1>
+    <p>Ethical Hacker | Cybersecurity Researcher | Founder @ Zehra Sec</p>
+  </header>
 
-            <div class="input-group">
-                <label>Select Key Type:</label>
-                <div class="radio-group">
-                    <label class="radio-label"><input type="radio" name="keyType" value="normal_demo" checked> Normal User (Demo Key)</label>
-                    <label class="radio-label"><input type="radio" name="keyType" value="enterprise_demo"> Enterprise User (Demo Key)</label>
-                    <label class="radio-label"><input type="radio" name="keyType" value="daily_general"> Daily General Key</label>
-                </div>
-            </div>
+  <section>
+    <h2>👋 About Me</h2>
+    <p>
+      I'm <span class="highlight">Yashab Alam</span>, a cybersecurity professional and ethical hacker passionate about building secure systems and empowering individuals and organizations with cutting-edge digital defense solutions. I'm the founder of <a href="https://zehrasec.com" target="_blank">Zehra Sec</a>, an AI-integrated cybersecurity startup focused on training, VAPT audits, and automation tools like <strong>LEWIS</strong>.
+    </p>
 
-            <div class="input-group" id="profileNameGroup" style="display: none;">
-                <label for="profileName">Your Profile Name (for Daily Key):</label>
-                <input type="text" id="profileName" placeholder="Enter name for daily key (e.g., ShadowStriker)">
-            </div>
-            <div class="input-group">
-                <label for="profileEmail">Your Email (Optional for Avatar):</label>
-                <input type="email" id="profileEmail" placeholder="your.email@example.com (optional)">
-                 <small class="note-inline">Used locally for placeholder avatar generation if main app doesn't provide one.</small>
-            </div>
+    <h2>🎓 Education</h2>
+    <ul>
+      <li>MBA in Business Administration – HBTU, Kanpur</li>
+      <li>BCA – Dr. Virendra Swaroop Institute of Computer Studies</li>
+    </ul>
 
-            <button id="generateKeyBtn">Get/Generate Key</button>
+    <h2>💼 Experience</h2>
+    <ul>
+      <li>Founder & CEO at Zehra Sec</li>
+      <li>Cybersecurity Trainer & Ethical Hacker (Freelance)</li>
+      <li>Worked with startups as Business Development Manager</li>
+    </ul>
 
-            <div id="keyDisplay" class="key-display-area" style="display: none;">
-                <h2 id="profileConfirmation"></h2>
-                <p id="generatedKey" class="key-value"></p>
-                <p class="note" id="keyNote"></p>
-            </div>
-             <div id="instructions" class="instructions-area" style="display: none;">
-                <h3>How to Use This Key:</h3>
-                <ol>
-                    <li>Copy the generated key above.</li>
-                    <li>Open the main LEWIS application.</li>
-                    <li>When prompted, paste this key into the "Login Key" field.</li>
-                    <li>Ensure you select the correct mode in the LEWIS application that corresponds to the key type you generated here.</li>
-                </ol>
-            </div>
-        </main>
-        <footer>
-            <p>&copy; 2024 LEWIS - Linux Environment Working Intelligence System. For authorized use only.</p>
-        </footer>
-    </div>
-    <script src="script.js"></script>
+    <h2>🧠 Projects</h2>
+    <ul>
+      <li><strong>LEWIS</strong> – Linux Environment Working Intelligence System: An AI-powered cybersecurity assistant for automation, threat detection, and ethical hacking education.</li>
+      <li><strong>Cybersecurity Workshop Portal</strong> – Full-stack web platform for managing cybersecurity workshops, including Google login, payments, certification, and analytics.</li>
+      <li><strong>Zehra Sec Platform</strong> – Website for selling courses, VAPT services, LEWIS tool, and real-time AI-driven dashboards.</li>
+      <li><strong>Employee Attendance Tracker</strong> – Termux-based portal for logging hours, activity, and generating reports in CSV/PDF.</li>
+    </ul>
+
+    <h2>📜 Research & Publications</h2>
+    <ul>
+      <li>50+ page research paper on LEWIS (to be published)</li>
+      <li>Blog series on ethical hacking and AI integration in security (coming soon)</li>
+    </ul>
+
+    <h2>📬 Contact Me</h2>
+    <p class="contact">
+      <strong>Email:</strong> <a href="mailto:yashabalam9@gmail.com">yashabalam9@gmail.com</a><br />
+      <strong>Phone:</strong> <a href="tel:+918960457971">+91 8960457971</a><br />
+      <strong>GitHub:</strong> <a href="https://github.com/yashab-cyber" target="_blank">@yashab-cyber</a><br />
+      <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/yashabalam" target="_blank">in/yashabalam</a>
+    </p>
+  </section>
 </body>
+
 </html>
