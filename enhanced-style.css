@@ -1094,6 +1094,86 @@ h2 {
   letter-spacing: 0.5px;
 }
 
+/* Projects Section Enhancements */
+.projects-intro {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: rgba(88, 166, 255, 0.05);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(88, 166, 255, 0.1);
+}
+
+.projects-intro p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.project-link {
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+  padding: var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-link:hover {
+  color: var(--accent-primary);
+  background: rgba(88, 166, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.project-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.feature {
+  background: rgba(88, 166, 255, 0.1);
+  color: var(--accent-primary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid rgba(88, 166, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.projects-summary {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  background: var(--bg-card);
+  border-radius: var(--border-radius-xl);
+  border: 1px solid rgba(88, 166, 255, 0.2);
+  text-align: center;
+}
+
+.summary-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.projects-cta {
+  margin-top: var(--spacing-lg);
+}
+
+.projects-cta p {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  font-size: 1.1rem;
+}
+
 /* Responsive Support Section */
 @media (max-width: 768px) {
   .support-container {
@@ -1393,242 +1473,42 @@ h2 {
   }
 }
 
-/* Small Mobile Devices */
-@media (max-width: 480px) {
-  :root {
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.4rem;
-    --spacing-md: 0.6rem;
-    --spacing-lg: 0.8rem;
-    --spacing-xl: 1.2rem;
-    --spacing-2xl: 1.6rem;
-  }
-  
-  body {
-    padding: var(--spacing-sm);
-    font-size: 0.85rem;
-    line-height: 1.5;
-  }
-  
-  /* Typography */
-  h1 {
-    font-size: 2rem;
-    line-height: 1.1;
-    margin-bottom: var(--spacing-md);
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    text-align: center;
-    line-height: 1.2;
-  }
-  
-  h3 {
-    font-size: 1.1rem;
-    line-height: 1.3;
-  }
-  
-  /* Header */
-  .avatar {
-    width: 120px;
-    height: 120px;
-    margin-bottom: var(--spacing-md);
-  }
-  
-  .tagline {
-    font-size: 1rem;
-    line-height: 1.4;
-    padding: 0 var(--spacing-sm);
-  }
-  
-  /* Sections */
-  .content-section {
-    padding: var(--spacing-xl) 0;
+/* Mobile adjustments for projects */
+@media (max-width: 768px) {
+  .projects-intro {
+    padding: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
   }
   
-  .section-icon {
-    font-size: 1.5rem;
-  }
-  
-  /* Cards */
-  .experience-card,
-  .project-card,
-  .research-card {
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-md);
-  }
-  
-  .card-header,
-  .project-header,
-  .research-header {
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  .project-header h3,
-  .research-header h3,
-  .card-header h3 {
+  .projects-intro p {
     font-size: 1rem;
-    margin-bottom: var(--spacing-xs);
   }
   
-  .project-subtitle,
-  .role-description,
-  .project-description {
-    font-size: 0.8rem;
-    line-height: 1.4;
-    margin-bottom: var(--spacing-sm);
-  }
-  
-  /* Tech tags */
-  .tech-stack,
-  .project-tech {
+  .project-features {
     gap: var(--spacing-xs);
-    margin-top: var(--spacing-sm);
   }
   
-  .tech-tag {
+  .feature {
     font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
-    border-radius: var(--border-radius-sm);
+    padding: 4px 8px;
   }
   
-  /* Status badges */
-  .project-status,
-  .status-badge {
-    font-size: 0.7rem;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--border-radius-sm);
-  }
-  
-  /* Buttons */
-  .cta-button {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 0.9rem;
-    border-radius: var(--border-radius-md);
-  }
-  
-  /* Support stats */
-  .support-stats {
-    flex-direction: column;
+  .summary-stats {
+    grid-template-columns: 1fr;
     gap: var(--spacing-md);
   }
   
-  .support-stat {
-    padding: var(--spacing-sm);
-    min-width: auto;
+  .projects-summary {
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
   }
   
-  .support-stat .stat-number {
-    font-size: 1.3rem;
-  }
-  
-  .support-stat .stat-label {
-    font-size: 0.8rem;
-  }
-  
-  .support-actions {
-    align-items: center;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  /* Research meta */
-  .research-meta {
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    align-items: flex-start;
-  }
-  
-  .meta-item {
-    font-size: 0.75rem;
-  }
-  
-  /* Contact improvements */
-  .contact-item {
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-md);
-  }
-  
-  .contact-item svg {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .contact-item span {
-    font-size: 0.85rem;
-  }
-  
-  /* Navigation improvements */
-  .theme-toggle,
-  .back-to-top {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-  }
-  
-  .back-to-top {
-    bottom: 15px;
-    right: 15px;
-  }
-  
-  /* Social links */
-  .social-links a {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .social-links svg {
-    width: 18px;
-    height: 18px;
+  .projects-cta p {
+    font-size: 1rem;
   }
 }
 
-/* Ultra-wide screen optimizations */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1200px;
-  }
-  
-  h1 {
-    font-size: 4rem;
-  }
-  
-  .about-grid {
-    grid-template-columns: 2fr 1fr;
-    gap: var(--spacing-3xl);
-  }
-}
-
-/* Landscape mobile devices */
-@media (max-width: 768px) and (orientation: landscape) {
-  .hero-section,
-  .content-section {
-    padding: var(--spacing-xl) 0;
-  }
-  
-  .avatar {
-    width: 100px;
-    height: 100px;
-  }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .tagline {
-    font-size: 0.9rem;
-  }
-}
-
+/* Responsive Design Continued */
 /* Very small screens */
 @media (max-width: 320px) {
   :root {
