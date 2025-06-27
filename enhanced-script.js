@@ -73,6 +73,7 @@ class PortfolioManager {
   startAnimations() {
     this.animateSkills();
     this.animateStats();
+    // Project animations are now initialized in hideLoadingScreen
   }
 
   // Theme Management
@@ -100,13 +101,55 @@ class PortfolioManager {
   hideLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
+      // Ensure all project elements are ready
+      this.prepareProjectElements();
+      
       setTimeout(() => {
         loadingScreen.classList.add('hidden');
         setTimeout(() => {
           loadingScreen.style.display = 'none';
+          // Initialize project animations after loading screen is hidden
+          this.initProjectAnimations();
         }, 500);
       }, 1000);
     }
+  }
+
+  prepareProjectElements() {
+    // Ensure all project cards are ready for animation
+    const projectCards = document.querySelectorAll('.project-card');
+    const features = document.querySelectorAll('.feature');
+    const projectLinks = document.querySelectorAll('.project-link');
+    
+    // Set initial states
+    projectCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+    });
+    
+    features.forEach(feature => {
+      feature.style.opacity = '0';
+      feature.style.transform = 'translateY(20px)';
+    });
+    
+    // Trigger animations after a brief delay
+    setTimeout(() => {
+      projectCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.transition = 'all 0.6s ease-out';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+      
+      features.forEach((feature, index) => {
+        setTimeout(() => {
+          feature.style.transition = 'all 0.4s ease-out';
+          feature.style.opacity = '1';
+          feature.style.transform = 'translateY(0)';
+        }, index * 50);
+      });
+    }, 200);
   }
 
   // Fallback to ensure loading screen is always hidden
@@ -287,7 +330,7 @@ class PortfolioManager {
 
   observeElements() {
     const elementsToObserve = document.querySelectorAll(
-      '.content-section, .experience-card, .project-card, .research-card, .contact-item, .timeline-item, .stat-item'
+      '.content-section, .experience-card, .project-card, .research-card, .contact-item, .timeline-item, .stat-item, .projects-intro, .projects-summary, .feature, .project-link'
     );
 
     elementsToObserve.forEach((el, index) => {
@@ -670,6 +713,104 @@ class PortfolioManager {
         toggleMobileNav();
       }
     });
+  }
+
+  // Project Animations and Interactions
+  initProjectAnimations() {
+    // Animate project features on hover
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+      card.addEventListener('mouseenter', this.handleProjectHover.bind(this));
+      card.addEventListener('mouseleave', this.handleProjectLeave.bind(this));
+    });
+
+    // Animate feature tags
+    const features = document.querySelectorAll('.feature');
+    features.forEach((feature, index) => {
+      setTimeout(() => {
+        feature.style.animation = 'fadeInUp 0.6s ease-out forwards';
+      }, index * 50);
+    });
+
+    // Project links interaction
+    const projectLinks = document.querySelectorAll('.project-link');
+    projectLinks.forEach(link => {
+      link.addEventListener('click', this.handleProjectLinkClick.bind(this));
+    });
+
+    // Projects summary stats animation
+    this.animateProjectStats();
+  }
+
+  handleProjectHover(e) {
+    const card = e.currentTarget;
+    const features = card.querySelectorAll('.feature');
+    
+    features.forEach((feature, index) => {
+      setTimeout(() => {
+        feature.style.transform = 'translateY(-2px)';
+        feature.style.boxShadow = '0 4px 8px rgba(88, 166, 255, 0.3)';
+      }, index * 50);
+    });
+  }
+
+  handleProjectLeave(e) {
+    const card = e.currentTarget;
+    const features = card.querySelectorAll('.feature');
+    
+    features.forEach(feature => {
+      feature.style.transform = 'translateY(0)';
+      feature.style.boxShadow = 'none';
+    });
+  }
+
+  handleProjectLinkClick(e) {
+    // Add click animation
+    const link = e.currentTarget;
+    link.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      link.style.transform = 'scale(1)';
+    }, 150);
+  }
+
+  animateProjectStats() {
+    const summaryStats = document.querySelectorAll('.projects-summary .stat-number');
+    
+    const animateProjectNumber = (element, target) => {
+      const text = element.textContent;
+      const isK = text.includes('K');
+      const numericTarget = parseInt(text.replace(/[^0-9]/g, ''));
+      const increment = numericTarget / 30;
+      let current = 0;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= numericTarget) {
+          current = numericTarget;
+          clearInterval(timer);
+        }
+        
+        let displayValue = Math.floor(current);
+        if (isK) {
+          displayValue = displayValue + 'K+';
+        } else if (text.includes('+')) {
+          displayValue = displayValue + '+';
+        }
+        element.textContent = displayValue;
+      }, 50);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const number = entry.target;
+          animateProjectNumber(number, 0);
+          observer.unobserve(number);
+        }
+      });
+    });
+
+    summaryStats.forEach(number => observer.observe(number));
   }
 }
 

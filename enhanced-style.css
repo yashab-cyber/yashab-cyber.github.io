@@ -1612,3 +1612,66 @@ h2 {
     margin-bottom: 1rem;
   }
 }
+
+/* Additional Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(88, 166, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.6);
+  }
+}
+
+/* Enhanced transitions for new project elements */
+.project-features .feature {
+  transition: all var(--transition-normal);
+}
+
+.project-link {
+  transition: all var(--transition-fast);
+}
+
+.projects-intro {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.projects-summary {
+  animation: fadeInUp 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+.project-card:hover .project-link {
+  animation: glow 2s ease-in-out infinite;
+}
