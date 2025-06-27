@@ -1583,106 +1583,36 @@ body {
   }
 }
 
-/* Touch and Interaction Improvements */
+/* Footer responsive design */
 @media (max-width: 768px) {
-  /* Larger touch targets */
-  .copy-btn, .tier-btn, .tab-btn {
-    min-height: 44px;
-    min-width: 44px;
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    text-align: center;
   }
   
-  /* Better spacing for touch */
-  .crypto-grid {
-    gap: var(--spacing-lg);
+  .social-links,
+  .footer-links {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
   }
   
-  .tiers-grid {
-    gap: var(--spacing-lg);
-  }
-  
-  /* Improve readability */
-  .crypto-card, .tier-card, .goal-card {
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  
-  /* Better button styling */
-  .copy-btn:active, .tier-btn:active, .tab-btn:active {
-    transform: scale(0.98);
+  .footer-logo {
+    justify-content: center;
   }
 }
 
-/* Accessibility Improvements */
-@media (prefers-reduced-motion: reduce) {
-  .terminal-cursor,
-  .typing-animation,
-  .mobile-nav-overlay,
-  .mobile-menu-btn {
-    animation: none !important;
-    transition: none !important;
-  }
-  
-  .mobile-nav-overlay {
-    transition: opacity 0.2s ease !important;
-  }
-}
-
-/* High Contrast Mode */
-@media (prefers-contrast: high) {
-  .crypto-card, .tier-card, .goal-card {
-    border-color: var(--accent-primary);
-    border-width: 2px;
-  }
-  
-  .mobile-nav-link {
-    border-color: var(--accent-primary);
-    border-width: 2px;
-  }
-  
-  .mobile-menu-btn {
-    border-width: 3px;
-  }
-}
-
-/* Orientation Changes */
-@media (max-width: 768px) and (orientation: landscape) {
-  .hero-section {
-    padding: 60px 0 40px;
-  }
-  
-  .mobile-nav-content {
-    padding: var(--spacing-sm);
-  }
-  
-  .mobile-nav-links {
+@media (max-width: 480px) {
+  .social-links,
+  .footer-links {
+    flex-direction: column;
     gap: var(--spacing-sm);
   }
   
-  .mobile-nav-link {
-    padding: var(--spacing-sm) var(--spacing-md);
-  }
-}
-
-/* Very Large Screens */
-@media (min-width: 1400px) {
-  .container {
-    max-width: 1200px;
-  }
-  
-  .hero-container {
-    gap: var(--spacing-3xl);
-  }
-  
-  .terminal-mockup {
-    max-width: 600px;
-  }
-  
-  .crypto-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .tiers-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .footer-section h4 {
+    margin-bottom: var(--spacing-sm);
   }
 }
 

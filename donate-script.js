@@ -91,7 +91,7 @@ class DonationManager {
   }
 
   animateStats() {
-    const statNumbers = document.querySelectorAll('.stat-number');
+    const statNumbers = document.querySelectorAll('.stat-number[data-target]');
     
     const animateNumber = (element, target) => {
       const increment = target / 30;
@@ -117,7 +117,9 @@ class DonationManager {
         if (entry.isIntersecting) {
           const number = entry.target;
           const target = parseInt(number.dataset.target);
-          animateNumber(number, target);
+          if (!isNaN(target)) {
+            animateNumber(number, target);
+          }
           observer.unobserve(number);
         }
       });
