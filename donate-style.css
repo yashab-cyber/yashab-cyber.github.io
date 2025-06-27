@@ -968,39 +968,30 @@ body {
 
 /* Footer */
 .footer {
-  background: var(--bg-secondary);
-  padding: 60px 0 30px;
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-3xl);
+  background: linear-gradient(135deg, rgba(10, 15, 26, 0.95) 0%, rgba(26, 31, 46, 0.95) 100%);
   border-top: 1px solid rgba(88, 166, 255, 0.2);
 }
 
 .footer-content {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--spacing-2xl);
   margin-bottom: var(--spacing-2xl);
 }
 
-.footer-section h4 {
-  margin-bottom: var(--spacing-md);
-  color: var(--accent-primary);
-}
-
-.footer-logo {
+.footer-section {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
-.footer-logo img {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--border-radius-sm);
-}
-
-.footer-logo span {
-  font-size: 1.2rem;
+.footer-section h4 {
+  color: var(--accent-primary);
+  font-size: 1.1rem;
   font-weight: 600;
+  margin-bottom: var(--spacing-sm);
 }
 
 .social-links,
@@ -1867,4 +1858,57 @@ body {
   .stat-number {
     font-size: 1.8rem;
   }
+}
+
+/* Social icons styling */
+.social-icon {
+  margin-right: var(--spacing-xs);
+  font-size: 1.1em;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  transition: all var(--transition-normal);
+}
+
+.social-links a:hover .social-icon {
+  transform: scale(1.2);
+  transition: transform var(--transition-fast);
+}
+
+/* Fix footer spacing and layout */
+.footer {
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-3xl);
+  background: linear-gradient(135deg, rgba(10, 15, 26, 0.95) 0%, rgba(26, 31, 46, 0.95) 100%);
+  border-top: 1px solid rgba(88, 166, 255, 0.2);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.footer-section h4 {
+  color: var(--accent-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Projects stats section spacing fix */
+.projects-stats {
+  margin-top: var(--spacing-3xl);
+  padding-top: var(--spacing-2xl);
+  border-top: 2px solid rgba(88, 166, 255, 0.2);
 }
