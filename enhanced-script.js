@@ -1014,6 +1014,272 @@ setTimeout(() => {
   }
 }, 3000);
 
+// Mini Bot Functionality
+initMiniBot();
+
+// Mini Bot System
+function initMiniBot() {
+  let botIsOpen = false;
+  
+  const botResponses = {
+    projects: {
+      title: "📊 Complete Portfolio Overview",
+      content: `I've built 8 comprehensive cybersecurity projects:
+
+🌟 **LEWIS** - AI-powered Linux security automation platform (Featured)
+🔒 **ZehraSec** - Full-stack cybersecurity training platform with payment integration  
+🧠 **SentiAir** - Offline AI behavioral threat detection system with GUI/CLI
+🛡️ **SentinelSec** - Advanced IDS with real-time monitoring and CVE intelligence
+🔄 **CyberRotate Pro** - Professional IP rotation suite for cybersecurity research
+🛡️ **ZehraShield** - 6-layer enterprise firewall with ML and zero trust architecture
+🤖 **InstaSwarm** - Multi-account automation bot for social media research
+👁️ **ZehraSight** - Enterprise AI cybersecurity suite with predictive intelligence
+
+**Stats:** 50K+ lines of code | 25+ technologies | 8 GitHub repositories`
+    },
+    lewis: {
+      title: "🧠 LEWIS - Flagship Project",
+      content: `LEWIS (Linux Environment Working Intelligence System) is my most advanced project:
+
+**🎯 Core Purpose:**
+AI-powered Linux security automation platform combining machine learning with practical cybersecurity applications.
+
+**🔥 Key Features:**
+• AI-driven system auditing and vulnerability assessment
+• Real-time threat detection with behavioral analysis  
+• Educational tools for ethical hacking training
+• Comprehensive analytics dashboard with detailed reporting
+• Automated security assessments and remediation suggestions
+
+**📚 Research Impact:**
+• 50+ page comprehensive research paper published
+• Covers cutting-edge AI integration in cybersecurity
+• Detailed methodology and implementation analysis
+
+**💡 Innovation:**
+Revolutionary approach to Linux security automation, bridging the gap between AI/ML capabilities and real-world cybersecurity needs.`
+    },
+    skills: {
+      title: "🛠️ Technical Expertise",
+      content: `My technical skills span multiple cybersecurity domains:
+
+**🔒 Core Security:**
+• Ethical Hacking & Advanced Penetration Testing
+• VAPT (Vulnerability Assessment & Penetration Testing)
+• IDS/IPS Systems Design & Management
+• Enterprise Firewall Architecture & Zero Trust
+• Threat Intelligence Analysis & CVE Research
+
+**🤖 AI & Development:**
+• Python, Machine Learning, Deep Learning
+• Full-Stack Development (Node.js, React, MongoDB)
+• Linux System Administration & Automation
+• Network Security (Scapy, packet analysis, protocol analysis)
+• Enterprise Security Architecture
+
+**📊 Tools & Frameworks:**
+• Security: Metasploit, Nmap, Wireshark, Burp Suite
+• AI/ML: TensorFlow, scikit-learn, pandas, numpy
+• Development: Git, Docker, REST APIs, microservices
+• Databases: MongoDB, MySQL, Redis
+
+**💼 Business & Leadership:**
+• Startup Leadership (Founder & CEO of Zehra Sec)
+• Cybersecurity Training & Education Programs
+• Business Development & Strategic Partnerships`
+    },
+    experience: {
+      title: "💼 Professional Journey",
+      content: `My career combines technical expertise with entrepreneurial leadership:
+
+**🚀 Founder & CEO - Zehra Sec (Current)**
+• Leading AI-integrated cybersecurity startup
+• Developing innovative security solutions and products
+• Building comprehensive training programs for cybersecurity professionals
+• Managing product development and business strategy
+
+**🎓 Cybersecurity Trainer & Ethical Hacker**
+• Specialized VAPT services for enterprise clients
+• Advanced penetration testing and security assessments
+• Cybersecurity education and professional training
+• Security consultation and architecture review
+
+**📈 Business Development Manager**
+• Strategic partnerships and business growth initiatives
+• Startup ecosystem experience and mentorship
+• Technology commercialization and market strategy
+
+**🎓 Educational Background:**
+• MBA in Business Administration (HBTU, Kanpur) - Strategic business development focus
+• BCA in Computer Applications - Programming and system fundamentals
+• Continuous learning in cybersecurity certifications and AI/ML`
+    },
+    zehra: {
+      title: "🏢 About Zehra Sec",
+      content: `Zehra Sec is my AI-integrated cybersecurity startup focused on innovation:
+
+**🎯 Mission:**
+Revolutionizing cybersecurity through AI integration, providing cutting-edge security solutions and comprehensive training programs.
+
+**🛡️ Core Services:**
+• Advanced VAPT (Vulnerability Assessment & Penetration Testing)
+• AI-powered security tool development (LEWIS, ZehraSight, etc.)
+• Professional cybersecurity training and certification programs
+• Enterprise security consultation and architecture design
+• Custom security solution development
+
+**💡 Innovation Focus:**
+• AI/ML integration in traditional security practices
+• Automated threat detection and response systems
+• Educational tools for next-generation cybersecurity professionals
+• Research and development in emerging security technologies
+
+**🌟 Unique Value:**
+Combining academic research, practical implementation, and business acumen to deliver comprehensive cybersecurity solutions that address real-world challenges.
+
+**🔗 Website:** zehrasec.com`
+    },
+    contact: {
+      title: "📞 Let's Connect",
+      content: `Ready to discuss cybersecurity solutions or collaboration opportunities?
+
+**📧 Direct Contact:**
+• Email: yashabalam9@gmail.com
+• Phone: +91 8960457971
+• Location: India
+
+**🔗 Professional Profiles:**
+• GitHub: github.com/yashab-cyber (View all 8 projects)
+• LinkedIn: linkedin.com/in/yashabalam
+• Company Website: zehrasec.com
+
+**💼 Available Services:**
+• Cybersecurity Consulting & Strategy
+• AI-powered Security Solutions Development
+• VAPT Audits & Penetration Testing
+• Security Training & Education Programs
+• Enterprise Security Architecture Review
+
+**🤝 Collaboration Opportunities:**
+• Research partnerships in AI security
+• Joint venture opportunities
+• Speaking engagements and conferences
+• Technical consulting projects
+• Startup mentorship and advisory roles
+
+**⚡ Response Time:** Typically within 24 hours for professional inquiries.`
+    }
+  };
+
+  // Make functions globally available
+  window.toggleBot = function() {
+    const botChat = document.getElementById('botChat');
+    const botToggle = document.querySelector('.bot-toggle');
+    
+    if (!botChat || !botToggle) return;
+    
+    botIsOpen = !botIsOpen;
+    
+    if (botIsOpen) {
+      botChat.style.display = 'flex';
+      botToggle.innerHTML = '✖️';
+      botToggle.style.background = 'linear-gradient(135deg, #ff6b6b, #ff5252)';
+    } else {
+      botChat.style.display = 'none';
+      botToggle.innerHTML = '🤖';
+      botToggle.style.background = 'var(--gradient-primary)';
+    }
+  };
+
+  window.askBot = function(topic) {
+    if (!botResponses[topic]) return;
+    
+    // Show typing indicator
+    showTyping();
+    
+    // Simulate AI thinking time
+    setTimeout(() => {
+      removeTyping();
+      
+      const response = botResponses[topic];
+      addBotMessage(`<strong>${response.title}</strong><br><br>${response.content}`);
+      
+      // Add follow-up suggestion
+      setTimeout(() => {
+        addBotMessage(`<br>💡 <em>Want to explore more? Try asking about other topics or scroll through the portfolio sections!</em>`);
+      }, 1000);
+      
+    }, Math.random() * 800 + 600); // Random delay for realistic feel
+  };
+
+  function showTyping() {
+    const messages = document.getElementById('botMessages');
+    if (!messages) return;
+    
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'bot-message typing-indicator';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+      <span>Zehra AI is analyzing</span>
+      <div class="typing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    `;
+    messages.appendChild(typingDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function removeTyping() {
+    const typing = document.getElementById('typingIndicator');
+    if (typing) typing.remove();
+  }
+
+  function addBotMessage(content) {
+    const messages = document.getElementById('botMessages');
+    if (!messages) return;
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'bot-message';
+    messageDiv.innerHTML = content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    messages.appendChild(messageDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // Initialize bot with welcome notification
+  setTimeout(() => {
+    const botToggle = document.querySelector('.bot-toggle');
+    if (!botToggle) return;
+    
+    // Add welcome notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      z-index: 999;
+      animation: slideInRight 0.5s ease;
+      box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+    `;
+    notification.textContent = '👋 Ask me about Yashab\'s projects & skills!';
+    document.body.appendChild(notification);
+    
+    // Remove notification after 4 seconds
+    setTimeout(() => {
+      notification.style.animation = 'slideInRight 0.5s ease reverse';
+      setTimeout(() => notification.remove(), 500);
+    }, 4000);
+  }, 3000); // Show after page loads
+
+  console.log('🤖 Mini Bot initialized successfully!');
+}
+
 // Initialize based on document state
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializePortfolio);

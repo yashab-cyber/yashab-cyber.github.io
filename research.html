@@ -31,6 +31,7 @@
     
     <!-- External CSS -->
     <link rel="stylesheet" href="research-style.css">
+    <link rel="stylesheet" href="enhanced-style.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -480,7 +481,33 @@
         </div>
     </footer>
 
+    <!-- Mini Bot -->
+    <div id="miniBot" class="mini-bot">
+        <div class="bot-header">
+            <span class="bot-title">🤖 Ask me anything!</span>
+            <button class="bot-close" onclick="toggleMiniBot()">×</button>
+        </div>
+        <div class="bot-content">
+            <div id="botMessages" class="bot-messages">
+                <div class="bot-message">
+                    <div class="message bot-msg">
+                        Hi! I'm your AI assistant. I can tell you about Yashab's research, projects, and expertise. Try asking about "research", "publications", "LEWIS", or "skills"!
+                    </div>
+                </div>
+            </div>
+            <div class="bot-input-container">
+                <input type="text" id="botInput" placeholder="Ask about research, projects, skills..." maxlength="100">
+                <button onclick="sendBotMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <button id="botToggle" class="bot-toggle" onclick="toggleMiniBot()">
+        🤖
+    </button>
+
     <!-- External JavaScript -->
     <script src="research-script.js"></script>
+    <script src="enhanced-script.js"></script>
 </body>
 </html>

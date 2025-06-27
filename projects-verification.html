@@ -57,6 +57,141 @@
             margin: 20px 0;
             font-size: 16px;
         }
+        
+        /* Mini Bot Styles */
+        .mini-bot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: Inter, sans-serif;
+        }
+        
+        .bot-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #58a6ff, #4c9aff);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .bot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(88, 166, 255, 0.5);
+        }
+        
+        .bot-chat {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 320px;
+            height: 400px;
+            background: #1a1a1a;
+            border: 1px solid #58a6ff;
+            border-radius: 15px;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .bot-header {
+            background: linear-gradient(135deg, #58a6ff, #4c9aff);
+            padding: 15px;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .bot-message {
+            background: rgba(88, 166, 255, 0.1);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border-left: 3px solid #58a6ff;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .bot-options {
+            padding: 10px 15px;
+            border-top: 1px solid #333;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .bot-option {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+        
+        .bot-option:hover {
+            background: #58a6ff;
+            transform: translateY(-1px);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #58a6ff;
+            font-style: italic;
+        }
+        
+        .typing-dots {
+            display: inline-flex;
+            gap: 3px;
+        }
+        
+        .typing-dots span {
+            width: 4px;
+            height: 4px;
+            background: #58a6ff;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; transform: scale(0.8); }
+            30% { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -208,7 +343,271 @@
         </p>
     </div>
 
+    <!-- Mini Bot -->
+    <div class="mini-bot" id="miniBot">
+        <button class="bot-toggle" onclick="toggleBot()">
+            🤖
+        </button>
+        
+        <div class="bot-chat" id="botChat">
+            <div class="bot-header">
+                <span>🤖</span>
+                <span>Zehra AI Assistant</span>
+                <button onclick="toggleBot()" style="margin-left: auto; background: none; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
+            </div>
+            
+            <div class="bot-messages" id="botMessages">
+                <div class="bot-message">
+                    👋 Hi! I'm your portfolio assistant. I can explain Yashab's projects, skills, and achievements. What would you like to know?
+                </div>
+            </div>
+            
+            <div class="bot-options" id="botOptions">
+                <button class="bot-option" onclick="askBot('projects')">📊 Projects Overview</button>
+                <button class="bot-option" onclick="askBot('skills')">🛠️ Skills & Tech</button>
+                <button class="bot-option" onclick="askBot('experience')">💼 Experience</button>
+                <button class="bot-option" onclick="askBot('lewis')">🧠 About LEWIS</button>
+                <button class="bot-option" onclick="askBot('contact')">📞 Contact Info</button>
+                <button class="bot-option" onclick="askBot('achievements')">🏆 Achievements</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Mini Bot Functionality
+        let botIsOpen = false;
+        
+        const botResponses = {
+            projects: {
+                title: "📊 Portfolio Projects Overview",
+                content: `Yashab has developed 8 major cybersecurity projects:
+
+🌟 **LEWIS** - AI-powered Linux security automation platform (Featured project)
+🔒 **ZehraSec** - Full-stack cybersecurity training platform with payment integration
+🧠 **SentiAir** - Offline AI behavioral threat detection system
+🛡️ **SentinelSec** - Advanced IDS with real-time monitoring and CVE intelligence
+🔄 **CyberRotate Pro** - Professional IP rotation suite for research
+🛡️ **ZehraShield** - 6-layer enterprise firewall with ML integration
+🤖 **InstaSwarm** - Multi-account automation bot for social media research
+👁️ **ZehraSight** - Enterprise AI cybersecurity suite with predictive intelligence
+
+Total: 50K+ lines of code across 25+ technologies!`
+            },
+            skills: {
+                title: "🛠️ Skills & Technologies",
+                content: `Yashab's technical expertise spans:
+
+**Core Security:**
+• Ethical Hacking & Penetration Testing
+• VAPT (Vulnerability Assessment)
+• IDS/IPS Systems & Firewall Management
+• Threat Intelligence & Analysis
+
+**AI & Development:**
+• Python, Machine Learning, AI/ML
+• Full-Stack Development (Node.js, React, MongoDB)
+• Linux System Administration
+• Network Security (Scapy, packet analysis)
+
+**Business & Leadership:**
+• Cybersecurity Training & Education
+• Business Development & Strategy
+• Startup Leadership (Founder & CEO of Zehra Sec)`
+            },
+            experience: {
+                title: "💼 Professional Experience",
+                content: `Yashab's career highlights:
+
+**🚀 Founder & CEO - Zehra Sec**
+• Leading AI-integrated cybersecurity startup
+• Developing innovative security solutions
+• Creating comprehensive training programs
+
+**🎓 Cybersecurity Trainer & Ethical Hacker**
+• Specialized VAPT services
+• Security consultation and training
+• Freelance penetration testing
+
+**📈 Business Development Manager**
+• Strategic partnerships and growth
+• Startup ecosystem experience
+• Business strategy development
+
+**Education:**
+• MBA in Business Administration (HBTU, Kanpur)
+• BCA in Computer Applications`
+            },
+            lewis: {
+                title: "🧠 About LEWIS Project",
+                content: `LEWIS (Linux Environment Working Intelligence System) is Yashab's flagship project:
+
+**🎯 Purpose:**
+AI-powered Linux security automation platform for comprehensive system analysis and threat detection.
+
+**🔥 Key Features:**
+• AI-driven system auditing and analysis
+• Real-time threat detection and response
+• Educational tools for ethical hacking
+• Analytics dashboard with detailed reporting
+• Automated security assessments
+
+**📚 Research:**
+• 50+ page comprehensive research paper published
+• Covers AI integration in cybersecurity
+• Detailed methodology and implementation
+
+**💡 Impact:**
+Revolutionary approach to Linux security automation, combining AI/ML with practical cybersecurity applications.`
+            },
+            contact: {
+                title: "📞 Contact Information",
+                content: `Get in touch with Yashab:
+
+**📧 Email:** yashabalam9@gmail.com
+**📱 Phone:** +91 8960457971
+**🌍 Location:** India
+
+**🔗 Professional Links:**
+• GitHub: github.com/yashab-cyber
+• LinkedIn: linkedin.com/in/yashabalam
+• Website: zehrasec.com
+
+**💼 Services Available:**
+• Cybersecurity Consulting
+• AI Security Solutions
+• VAPT Audits & Training
+• Penetration Testing
+• Security Architecture Review
+
+**🤝 Open for:**
+Collaboration opportunities, consulting projects, and partnerships in cybersecurity innovation.`
+            },
+            achievements: {
+                title: "🏆 Key Achievements",
+                content: `Yashab's notable accomplishments:
+
+**🚀 Entrepreneurship:**
+• Founded Zehra Sec - AI-integrated cybersecurity startup
+• Built comprehensive product portfolio (8 major projects)
+• Developed end-to-end security solutions
+
+**📊 Technical Impact:**
+• 50K+ lines of code across multiple projects
+• 25+ technologies mastered and implemented
+• Published 50+ pages of cybersecurity research
+
+**🎓 Education & Training:**
+• Advanced degrees in Business and Computer Applications
+• Extensive cybersecurity training and certifications
+• Teaching and mentoring in ethical hacking
+
+**🔬 Innovation:**
+• Pioneer in AI-integrated cybersecurity solutions
+• Advanced threat detection systems development
+• Enterprise-grade security tool creation`
+            }
+        };
+        
+        function toggleBot() {
+            const botChat = document.getElementById('botChat');
+            const botToggle = document.querySelector('.bot-toggle');
+            
+            botIsOpen = !botIsOpen;
+            
+            if (botIsOpen) {
+                botChat.style.display = 'flex';
+                botToggle.innerHTML = '✖️';
+                botToggle.style.background = 'linear-gradient(135deg, #ff6b6b, #ff5252)';
+            } else {
+                botChat.style.display = 'none';
+                botToggle.innerHTML = '🤖';
+                botToggle.style.background = 'linear-gradient(135deg, #58a6ff, #4c9aff)';
+            }
+        }
+        
+        function showTyping() {
+            const messages = document.getElementById('botMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'bot-message typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <span>Zehra AI is typing</span>
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            `;
+            messages.appendChild(typingDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function removeTyping() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) typing.remove();
+        }
+        
+        function addBotMessage(content) {
+            const messages = document.getElementById('botMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'bot-message';
+            messageDiv.innerHTML = content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        function askBot(topic) {
+            if (!botResponses[topic]) return;
+            
+            // Show typing indicator
+            showTyping();
+            
+            // Simulate thinking time
+            setTimeout(() => {
+                removeTyping();
+                
+                const response = botResponses[topic];
+                addBotMessage(`<strong>${response.title}</strong><br><br>${response.content}`);
+                
+                // Add follow-up options
+                setTimeout(() => {
+                    addBotMessage(`<br>💡 <em>Want to know more? Try asking about other topics or visit the main portfolio!</em>`);
+                }, 1000);
+                
+            }, Math.random() * 1000 + 500); // Random delay between 500-1500ms
+        }
+        
+        // Initialize bot with welcome message
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const botToggle = document.querySelector('.bot-toggle');
+                botToggle.style.animation = 'pulse 2s infinite';
+                
+                // Add a subtle notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    bottom: 90px;
+                    right: 20px;
+                    background: rgba(88, 166, 255, 0.9);
+                    color: white;
+                    padding: 8px 12px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    z-index: 999;
+                    animation: slideIn 0.5s ease;
+                `;
+                notification.textContent = '👋 Ask me about Yashab\'s projects!';
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'slideIn 0.5s ease reverse';
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+            }, 2000);
+        });
+
         function clearCacheAndRedirect() {
             // Clear all possible caches
             if ('caches' in window) {
@@ -232,6 +631,7 @@
         
         console.log('✅ All 8 projects are ready to display on the main portfolio');
         console.log('Files updated:', ['index.html', 'enhanced-style.css', 'enhanced-script.js', 'sw.js']);
+        console.log('🤖 Mini Bot initialized and ready to assist!');
     </script>
 </body>
 </html>

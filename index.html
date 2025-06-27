@@ -645,6 +645,36 @@
     </svg>
   </button>
 
+  <!-- Mini Bot -->
+  <div class="mini-bot" id="miniBot">
+    <button class="bot-toggle" onclick="toggleBot()" aria-label="Open AI Assistant">
+      🤖
+    </button>
+    
+    <div class="bot-chat" id="botChat">
+      <div class="bot-header">
+        <span>🤖</span>
+        <span>Zehra AI Assistant</span>
+        <button onclick="toggleBot()" style="margin-left: auto; background: none; border: none; color: white; cursor: pointer; font-size: 18px;" aria-label="Close bot">×</button>
+      </div>
+      
+      <div class="bot-messages" id="botMessages">
+        <div class="bot-message">
+          👋 Hi! I'm Yashab's AI assistant. I can explain his cybersecurity projects, technical skills, and professional background. What would you like to explore?
+        </div>
+      </div>
+      
+      <div class="bot-options" id="botOptions">
+        <button class="bot-option" onclick="askBot('projects')">📊 All Projects</button>
+        <button class="bot-option" onclick="askBot('lewis')">🧠 LEWIS Details</button>
+        <button class="bot-option" onclick="askBot('skills')">🛠️ Technical Skills</button>
+        <button class="bot-option" onclick="askBot('experience')">💼 Experience</button>
+        <button class="bot-option" onclick="askBot('zehra')">🏢 About Zehra Sec</button>
+        <button class="bot-option" onclick="askBot('contact')">📞 Contact Info</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Loading Screen -->
   <div class="loading-screen" id="loadingScreen">
     <div class="loading-content">
