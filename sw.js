@@ -1,5 +1,5 @@
 // Service Worker for Yashab Alam Portfolio
-const CACHE_NAME = 'yashab-portfolio-v1';
+const CACHE_NAME = 'yashab-portfolio-v2-updated';
 const urlsToCache = [
   '/',
   '/index.html',

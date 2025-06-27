@@ -985,7 +985,23 @@ function initializePortfolio() {
 // Service Worker Registration (if available)
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js')
-    .then(registration => console.log('SW registered:', registration))
+    .then(registration => {
+      console.log('SW registered:', registration);
+      // Force update if there's a waiting service worker
+      if (registration.waiting) {
+        registration.waiting.postMessage({type: 'SKIP_WAITING'});
+      }
+      // Check for updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New content is available, refresh the page
+            window.location.reload();
+          }
+        });
+      });
+    })
     .catch(error => console.log('SW registration failed:', error));
 }
 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cache Test - Yashab Portfolio</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #0a0a0a; color: white; }
+        .test { margin: 10px 0; padding: 10px; background: #1a1a1a; border-radius: 5px; }
+        .success { border-left: 4px solid #58a6ff; }
+        .info { border-left: 4px solid #f39c12; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Portfolio Update Test</h1>
+    
+    <div class="test success">
+        <h3>✅ Files Updated:</h3>
+        <ul>
+            <li>index.html - Added 8 new projects</li>
+            <li>enhanced-style.css - Added project animations & styles</li>
+            <li>enhanced-script.js - Added project interactions</li>
+            <li>sw.js - Updated cache version</li>
+        </ul>
+    </div>
+    
+    <div class="test info">
+        <h3>🚀 New Projects Added:</h3>
+        <ol>
+            <li><strong>LEWIS</strong> - AI-powered Linux security automation (Featured)</li>
+            <li><strong>ZehraSec</strong> - Full-stack cybersecurity training platform</li>
+            <li><strong>SentiAir</strong> - AI behavioral threat detection system</li>
+            <li><strong>SentinelSec</strong> - Advanced Intrusion Detection System</li>
+            <li><strong>CyberRotate Pro</strong> - IP rotation and anonymity suite</li>
+            <li><strong>ZehraShield</strong> - 6-layer enterprise firewall</li>
+            <li><strong>InstaSwarm</strong> - Multi-account automation bot</li>
+            <li><strong>ZehraSight</strong> - Enterprise AI cybersecurity suite</li>
+        </ol>
+    </div>
+    
+    <div class="test info">
+        <h3>🎨 New Features:</h3>
+        <ul>
+            <li>GitHub links for each project</li>
+            <li>Feature highlights with hover animations</li>
+            <li>Project summary statistics</li>
+            <li>Enhanced mobile responsiveness</li>
+            <li>Improved loading animations</li>
+        </ul>
+    </div>
+    
+    <div style="margin-top: 30px; text-align: center;">
+        <a href="index.html?v=2.0&t=" style="color: #58a6ff; text-decoration: none; padding: 10px 20px; border: 2px solid #58a6ff; border-radius: 5px; display: inline-block;">
+            🔗 View Updated Portfolio
+        </a>
+    </div>
+    
+    <script>
+        // Add timestamp to portfolio link
+        document.querySelector('a').href += Date.now();
+        
+        // Log test info
+        console.log('Portfolio Update Test Page Loaded');
+        console.log('Current time:', new Date().toISOString());
+        console.log('All portfolio files have been updated with version 2.0');
+    </script>
+</body>
+</html>
