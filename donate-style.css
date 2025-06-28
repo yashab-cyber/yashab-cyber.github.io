@@ -465,12 +465,51 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
 }
 
-.coin-logo {
-  width: 100%;
-  height: 100%;
+/* Enhanced SVG logo styling */
+.crypto-icon {
+  background: rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+}
+
+.payment-icon {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-normal);
+}
+
+.crypto-card:hover .crypto-icon {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-card:hover .payment-icon {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Crypto and Payment SVG Logo Styling */
+.crypto-icon svg,
+.payment-icon svg {
+  width: 32px;
+  height: 32px;
+  transition: transform var(--transition-normal);
+}
+
+.crypto-card:hover .crypto-icon svg,
+.payment-card:hover .payment-icon svg {
+  transform: scale(1.1);
+}
+
+/* Legacy support - remove old image styling */
+.coin-logo,
+.payment-logo {
+  display: none;
 }
 
 .crypto-info h3 {
@@ -605,10 +644,7 @@ body {
   justify-content: center;
 }
 
-.payment-logo {
-  max-width: 100%;
-  max-height: 100%;
-}
+/* Payment logo styling handled above with crypto icons */
 
 .payment-info h3 {
   font-size: 1.5rem;
@@ -1223,10 +1259,31 @@ body {
 
 /* Mobile-specific improvements */
 @media (max-width: 768px) {
-  /* Optimize images for mobile */
-  .coin-logo, .logo-img {
+  /* Optimize SVG logos for mobile */
+  .crypto-icon svg, .payment-icon svg, .logo-img {
     will-change: transform;
     backface-visibility: hidden;
+  }
+  
+  /* Responsive sizing for mobile */
+  .crypto-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .crypto-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .payment-icon {
+    width: 70px;
+    height: 50px;
+  }
+  
+  .payment-icon svg {
+    width: 28px;
+    height: 28px;
   }
   
   /* Improve scroll performance */
