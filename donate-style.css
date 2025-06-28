@@ -1852,48 +1852,70 @@ body {
   }
 }
 
-/* Social Media Icons */
-.social-links a {
+/* Social Media Icons - General styling removed, using specific footer styling */
+
+/* Footer Social Links - Match main theme styling */
+.footer-section .social-links {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-start;
+  margin-top: var(--spacing-sm);
+}
+
+.footer-section .social-links a {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: var(--bg-card);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+  border-radius: var(--border-radius-full);
+  color: var(--text-primary);
+  text-decoration: none;
   transition: all var(--transition-normal);
+  backdrop-filter: blur(10px);
 }
 
-.social-links a:hover {
-  background: rgba(88, 166, 255, 0.1);
-  transform: translateX(5px);
+.footer-section .social-links a:hover {
+  background: var(--accent-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-primary);
 }
 
-.social-icon {
-  width: 20px;
-  height: 20px;
-  filter: invert(0.7);
-  transition: filter var(--transition-normal);
+.footer-section .social-links a svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
 }
 
-.social-links a:hover .social-icon {
-  filter: invert(0.4) sepia(1) saturate(3) hue-rotate(180deg);
+/* Responsive styling for social media icons */
+@media (max-width: 768px) {
+  .footer-section .social-links {
+    gap: var(--spacing-sm);
+    justify-content: center;
+  }
+  
+  .footer-section .social-links a {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .footer-section .social-links a svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
-/* GitHub icon specific styling */
-.social-links a[href*="github"]:hover .social-icon {
-  filter: invert(1);
-}
-
-/* LinkedIn icon specific styling */
-.social-links a[href*="linkedin"]:hover .social-icon {
-  filter: invert(0.3) sepia(1) saturate(3) hue-rotate(200deg);
-}
-
-/* Instagram icon specific styling */
-.social-links a[href*="instagram"]:hover .social-icon {
-  filter: invert(0.3) sepia(1) saturate(3) hue-rotate(300deg);
-}
-
-/* Twitter/X icon specific styling */
-.social-links a[href*="x.com"]:hover .social-icon {
-  filter: invert(0.3) sepia(1) saturate(3) hue-rotate(180deg);
+@media (max-width: 480px) {
+  .footer-section .social-links a {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .footer-section .social-links a svg {
+    width: 18px;
+    height: 18px;
+  }
 }
