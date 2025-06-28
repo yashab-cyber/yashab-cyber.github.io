@@ -482,29 +482,32 @@
     </footer>
 
     <!-- Mini Bot -->
-    <div id="miniBot" class="mini-bot">
-        <div class="bot-header">
-            <span class="bot-title">🤖 Ask me anything!</span>
-            <button class="bot-close" onclick="toggleMiniBot()">×</button>
-        </div>
-        <div class="bot-content">
-            <div id="botMessages" class="bot-messages">
+    <div class="mini-bot" id="miniBot">
+        <button class="bot-toggle" onclick="toggleBot()" aria-label="Open AI Assistant">
+            🤖
+        </button>
+        
+        <div class="bot-chat" id="botChat">
+            <div class="bot-header">
+                <span>🤖</span>
+                <span>AI Assistant</span>
+                <button onclick="toggleBot()" style="margin-left: auto; background: none; border: none; color: white; cursor: pointer; font-size: 18px;" aria-label="Close bot">×</button>
+            </div>
+            
+            <div class="bot-messages" id="botMessages">
                 <div class="bot-message">
-                    <div class="message bot-msg">
-                        Hi! I'm your AI assistant. I can tell you about Yashab's research, projects, and expertise. Try asking about "research", "publications", "LEWIS", or "skills"!
-                    </div>
+                    👋 Hi! I can explain Yashab's research, publications, methodologies, and how the LEWIS system works. What would you like to know?
                 </div>
             </div>
-            <div class="bot-input-container">
-                <input type="text" id="botInput" placeholder="Ask about research, projects, skills..." maxlength="100">
-                <button onclick="sendBotMessage()">Send</button>
+            
+            <div class="bot-options" id="botOptions">
+                <button class="bot-option" onclick="askBot('research')">🔬 Research Areas</button>
+                <button class="bot-option" onclick="askBot('publications')">📄 Publications</button>
+                <button class="bot-option" onclick="askBot('lewis')">🤖 LEWIS System</button>
+                <button class="bot-option" onclick="askBot('skills')">🛠️ Technical Skills</button>
             </div>
         </div>
     </div>
-    
-    <button id="botToggle" class="bot-toggle" onclick="toggleMiniBot()">
-        🤖
-    </button>
 
     <!-- External JavaScript -->
     <script src="research-script.js"></script>

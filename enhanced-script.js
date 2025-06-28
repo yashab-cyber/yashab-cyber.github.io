@@ -1168,6 +1168,97 @@ Combining academic research, practical implementation, and business acumen to de
 • Startup mentorship and advisory roles
 
 **⚡ Response Time:** Typically within 24 hours for professional inquiries.`
+    },
+    research: {
+      title: "🔬 Research Focus Areas",
+      content: `My research spans three key cybersecurity domains:
+
+**🤖 AI-Integrated Security**
+• Machine learning algorithms for threat detection
+• AI-powered vulnerability assessment automation
+• Intelligent security orchestration and response
+• Behavioral analysis for anomaly detection
+
+**🐧 Linux Security Systems**
+• Advanced Linux hardening methodologies
+• System-level security monitoring and automation
+• Container and virtualization security
+• Critical infrastructure protection
+
+**🎓 Educational Technology**
+• Interactive cybersecurity training platforms
+• Gamified learning approaches for ethical hacking
+• AI-enhanced skill assessment tools
+• Next-generation security education frameworks
+
+**📈 Research Impact:**
+• 50+ pages of comprehensive research documentation
+• Novel methodologies in AI-security integration
+• Practical applications tested in real-world scenarios`
+    },
+    publications: {
+      title: "📄 Publications & Academic Work",
+      content: `My published research and ongoing academic contributions:
+
+**🌟 Featured Publication:**
+**LEWIS: Linux Environment Working Intelligence System**
+• 50+ page comprehensive research paper (2025)
+• AI-powered cybersecurity assistant for automation and threat detection
+• Covers machine learning integration in security practices
+• Detailed implementation methodology and testing results
+
+**📚 Key Research Topics:**
+• AI-driven threat detection algorithms
+• Linux system security automation
+• Machine learning in cybersecurity applications
+• Educational frameworks for ethical hacking
+• Real-time monitoring and response systems
+• Integration methodologies for security tools
+
+**🔄 Upcoming Publications:**
+• AI Integration in Ethical Hacking (Blog Series)
+• Advanced AI Security Frameworks (Conference Paper - 35% complete)
+• Next-generation approaches to cybersecurity automation
+
+**📥 Access:** Download the LEWIS research paper directly from this site`
+    },
+    methodology: {
+      title: "⚙️ Research Methodology",
+      content: `My systematic approach to cybersecurity research:
+
+**📋 6-Step Research Process:**
+
+**1. Problem Identification**
+• Gap analysis in current cybersecurity practices
+• Emerging threat landscape assessment
+• Industry pain point analysis
+
+**2. Literature Review**
+• Comprehensive academic source analysis
+• State-of-the-art solution evaluation
+• Methodology comparison and benchmarking
+
+**3. System Design**
+• AI-security integration architecture
+• Innovative solution design principles
+• Scalability and security considerations
+
+**4. Implementation**
+• Proof-of-concept development
+• Modern technology stack utilization
+• Iterative development and testing
+
+**5. Testing & Validation**
+• Controlled environment testing
+• Real-world scenario validation
+• Performance benchmarking and optimization
+
+**6. Documentation**
+• Comprehensive findings documentation
+• Methodology and process recording
+• Future research recommendations
+
+**🎯 Focus:** Bridging theoretical research with practical cybersecurity applications`
     }
   };
 
@@ -1252,6 +1343,14 @@ Combining academic research, practical implementation, and business acumen to de
     const botToggle = document.querySelector('.bot-toggle');
     if (!botToggle) return;
     
+    // Determine page-specific welcome message
+    let welcomeMessage = '👋 Ask me about Yashab\'s projects & skills!';
+    if (window.location.pathname.includes('research.html')) {
+      welcomeMessage = '🔬 Ask me about research, publications & LEWIS!';
+    } else if (window.location.pathname.includes('donate.html')) {
+      welcomeMessage = '💰 Ask me about donations & project funding!';
+    }
+    
     // Add welcome notification
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -1267,7 +1366,7 @@ Combining academic research, practical implementation, and business acumen to de
       animation: slideInRight 0.5s ease;
       box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
     `;
-    notification.textContent = '👋 Ask me about Yashab\'s projects & skills!';
+    notification.textContent = welcomeMessage;
     document.body.appendChild(notification);
     
     // Remove notification after 4 seconds
