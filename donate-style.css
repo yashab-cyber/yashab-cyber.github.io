@@ -1537,14 +1537,6 @@ body {
     padding: var(--spacing-md);
   }
   
-  .stat-number {
-    font-size: 1.5rem;
-  }
-  
-  .stat-label {
-    font-size: 0.8rem;
-  }
-  
   .wallet-address {
     flex-direction: column;
     gap: var(--spacing-sm);
@@ -1860,55 +1852,48 @@ body {
   }
 }
 
-/* Social icons styling */
-.social-icon {
-  margin-right: var(--spacing-xs);
-  font-size: 1.1em;
-}
-
+/* Social Media Icons */
 .social-links a {
   display: flex;
   align-items: center;
-  padding: var(--spacing-xs) 0;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
   transition: all var(--transition-normal);
 }
 
+.social-links a:hover {
+  background: rgba(88, 166, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(0.7);
+  transition: filter var(--transition-normal);
+}
+
 .social-links a:hover .social-icon {
-  transform: scale(1.2);
-  transition: transform var(--transition-fast);
+  filter: invert(0.4) sepia(1) saturate(3) hue-rotate(180deg);
 }
 
-/* Fix footer spacing and layout */
-.footer {
-  margin-top: var(--spacing-3xl);
-  padding-top: var(--spacing-3xl);
-  background: linear-gradient(135deg, rgba(10, 15, 26, 0.95) 0%, rgba(26, 31, 46, 0.95) 100%);
-  border-top: 1px solid rgba(88, 166, 255, 0.2);
+/* GitHub icon specific styling */
+.social-links a[href*="github"]:hover .social-icon {
+  filter: invert(1);
 }
 
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-2xl);
-  margin-bottom: var(--spacing-2xl);
+/* LinkedIn icon specific styling */
+.social-links a[href*="linkedin"]:hover .social-icon {
+  filter: invert(0.3) sepia(1) saturate(3) hue-rotate(200deg);
 }
 
-.footer-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
+/* Instagram icon specific styling */
+.social-links a[href*="instagram"]:hover .social-icon {
+  filter: invert(0.3) sepia(1) saturate(3) hue-rotate(300deg);
 }
 
-.footer-section h4 {
-  color: var(--accent-primary);
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-sm);
-}
-
-/* Projects stats section spacing fix */
-.projects-stats {
-  margin-top: var(--spacing-3xl);
-  padding-top: var(--spacing-2xl);
-  border-top: 2px solid rgba(88, 166, 255, 0.2);
+/* Twitter/X icon specific styling */
+.social-links a[href*="x.com"]:hover .social-icon {
+  filter: invert(0.3) sepia(1) saturate(3) hue-rotate(180deg);
 }
