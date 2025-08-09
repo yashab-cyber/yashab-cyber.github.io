@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Support Yashab Alam | Donate</title>
+  <meta name="description" content="Support AI-powered cybersecurity research, open-source tools, and education by donating to Yashab Alam / ZehraSec." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body { background:#050505; }
+    .donation-hero { padding: clamp(5rem,12vh,8rem) 0 3rem; position:relative; }
+    .donation-hero:before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 40%, rgba(0,255,65,.18), transparent 60%), radial-gradient(circle at 70% 60%, rgba(0,140,45,.25), transparent 65%); opacity:.9; z-index:-1; }
+    .donation-hero h1 { font-size: clamp(2.4rem,6vw,3.6rem); font-family:'Share Tech Mono',monospace; background:linear-gradient(90deg,#fff,#b9ffd0,#00ff41 70%); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1.05; }
+    .breadcrumb { font-size:.65rem; letter-spacing:1px; text-transform:uppercase; color:#8a8f98; display:flex; gap:.5rem; }
+    .breadcrumb a { color:var(--accent); text-decoration:none; }
+    .lead { max-width:780px; margin-top:1.2rem; color:#b7b7b7; font-size:1.05rem; line-height:1.55; }
+    .tier-grid { display:grid; gap:1.4rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:2.2rem; }
+    .tier-card { background:#060606; border:1px solid #121212; padding:1.4rem 1.25rem 1.6rem; border-radius:14px; position:relative; overflow:hidden; display:grid; gap:.8rem; }
+    .tier-card:before { content:""; position:absolute; inset:0; background:linear-gradient(140deg,rgba(0,255,65,.08),transparent 60%); opacity:0; transition:opacity .35s; }
+    .tier-card:hover:before { opacity:1; }
+    .tier-card h3 { font-size:1rem; font-weight:600; letter-spacing:.5px; }
+    .range { font-size:.7rem; letter-spacing:1px; font-weight:600; text-transform:uppercase; color:var(--accent); }
+    .tier-card ul { list-style:none; display:grid; gap:.4rem; font-size:.8rem; line-height:1.4; color:#8a8f98; }
+    .highlight-offer { margin-top:2rem; background:linear-gradient(45deg,#00ff41,#008f11); color:#000; padding:1.1rem 1.25rem 1.2rem; border-radius:14px; font-weight:600; font-size:.85rem; box-shadow:0 8px 24px -8px rgba(0,255,65,.35); }
+    .methods { margin-top:3.2rem; }
+    .methods h2 { font-size:1.7rem; font-family:'Share Tech Mono',monospace; margin-bottom:1.5rem; background:linear-gradient(90deg,#fff,#b9ffd0,#00ff41 70%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .method-grid { display:grid; gap:1.5rem; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+    .method { background:#060606; border:1px solid #121212; border-radius:14px; padding:1.2rem 1.1rem 1.35rem; display:grid; gap:.65rem; position:relative; overflow:hidden; }
+    .method:before { content:""; position:absolute; inset:0; background:linear-gradient(140deg,rgba(0,255,65,.07),transparent 60%); opacity:0; transition:opacity .35s; }
+    .method:hover:before { opacity:1; }
+    .method h3 { font-size:.95rem; letter-spacing:.7px; font-weight:600; }
+    .wallet-box { background:#040d05; border:1px dashed #1f4029; padding:.9rem .95rem 1rem; border-radius:10px; font-family:'Share Tech Mono',monospace; font-size:.75rem; word-break:break-all; position:relative; }
+    .wallet-box button { position:absolute; top:.55rem; right:.55rem; background:#071108; border:1px solid #1f4029; color:var(--accent); font-size:.6rem; padding:.35rem .55rem; border-radius:6px; cursor:pointer; letter-spacing:1px; text-transform:uppercase; }
+    .goals { margin-top:3.4rem; }
+    .goal-list { list-style:none; display:grid; gap:1.1rem; margin-top:1.3rem; }
+    .goal { background:#060606; border:1px solid #121212; padding:1rem .95rem 1.1rem; border-radius:12px; position:relative; overflow:hidden; }
+    .goal h4 { font-size:.9rem; font-weight:600; letter-spacing:.6px; margin-bottom:.4rem; }
+    .progress { --p:0%; height:6px; background:#121212; border-radius:100px; overflow:hidden; position:relative; margin-top:.4rem; }
+    .progress:before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,#00ff41,#048d2a); width:var(--p); border-radius:inherit; box-shadow:0 0 0 1px rgba(0,255,65,.4),0 0 0 4px rgba(0,255,65,.06); }
+    .donation-cta { margin-top:2.2rem; display:flex; gap:1rem; flex-wrap:wrap; }
+    .donation-cta .btn { font-size:.8rem; }
+    .security { margin-top:4rem; background:#060606; border:1px solid #121212; padding:1.4rem 1.25rem 1.6rem; border-radius:14px; display:grid; gap:1.1rem; }
+    .security h3 { font-size:1rem; font-weight:600; letter-spacing:.6px; }
+    .security ul { list-style:disc; padding-left:1.1rem; display:grid; gap:.4rem; font-size:.78rem; color:#8a8f98; }
+    footer { margin-top:4rem; padding:3rem 0 2.2rem; background:#040404; border-top:1px solid #111; }
+    .foot { display:grid; gap:2rem; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+    .foot h4 { font-size:.95rem; font-weight:600; letter-spacing:.6px; margin-bottom:.8rem; }
+    .foot a { color:#8a8f98; font-size:.75rem; text-decoration:none; }
+    .foot a:hover { color:var(--accent); }
+    .copy { font-size:.65rem; letter-spacing:1px; color:#5a5f68; margin-top:2rem; text-transform:uppercase; }
+    .back { position:fixed; left:1rem; top:1rem; z-index:100; }
+    .animate { animation:fadeUp .7s cubic-bezier(.4,0,.2,1) both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px);} }
+    @media (max-width:880px) { .donation-hero h1 { font-size: clamp(2.2rem,7vw,3.1rem);} }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="btn ghost back">← Home</a>
+  <header class="donation-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Donate</span></nav>
+      <h1>Support Innovation in <span class="accent">AI Cybersecurity</span></h1>
+      <p class="lead">Your contribution fuels development of open-source security tools (like NMAP-AI & LEWIS), AI research, advanced training content, and global cybersecurity education. Every donation—no matter the size—creates real impact.</p>
+      <div class="tier-grid" aria-label="Donation tiers">
+        <div class="tier-card animate">
+          <h3>Bronze Supporter</h3>
+          <div class="range">$5 - $24</div>
+          <ul>
+            <li>Supporter Badge</li>
+            <li>Early Access Builds</li>
+            <li>Monthly Impact Report</li>
+          </ul>
+        </div>
+        <div class="tier-card animate" style="border-color:#5d5d62;">
+          <h3>Silver Supporter</h3>
+            <div class="range">$25 - $99</div>
+          <ul>
+            <li>All Bronze Benefits</li>
+            <li>Priority Support</li>
+            <li>Beta Feature Channel</li>
+          </ul>
+        </div>
+        <div class="tier-card animate" style="border-color:#715b05;">
+          <h3>Gold Sponsor</h3>
+            <div class="range">$100 - $499</div>
+          <ul>
+            <li>Feature Request Priority</li>
+            <li>Branding / Acknowledgment</li>
+            <li>1-on-1 Consultation</li>
+          </ul>
+        </div>
+        <div class="tier-card animate" style="border-color:#3f494d;">
+          <h3>Platinum Partner</h3>
+            <div class="range">$500+</div>
+          <ul>
+            <li>Custom Development</li>
+            <li>Enterprise Support</li>
+            <li>Strategic Partnership</li>
+          </ul>
+        </div>
+      </div>
+      <div class="highlight-offer">💡 Special: First 100 donors receive exclusive Matrix-themed NFT collectibles.</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="methods" id="methods">
+      <div class="container">
+        <h2>Donation Methods</h2>
+        <div class="method-grid">
+          <div class="method animate">
+            <h3>GitHub Sponsors</h3>
+            <p>Recurring monthly support for sustained roadmap acceleration.</p>
+            <a href="https://github.com/sponsors/yashab-cyber" class="btn primary" target="_blank" rel="noopener">Sponsor →</a>
+          </div>
+          <div class="method animate">
+            <h3>PayPal</h3>
+            <p>Fast, secure global payments via PayPal.</p>
+            <a href="https://paypal.me/yashab07" class="btn ghost" target="_blank" rel="noopener">PayPal →</a>
+          </div>
+          <div class="method animate">
+            <h3>Solana (SOL)</h3>
+            <p>Instant low-fee blockchain donation – verified wallet.</p>
+            <div class="wallet-box" data-wallet="5pEwP9JN8tRCXL5Vc9gQrxRyHHyn7J6P2DCC8cSQKDKT">5pEwP9JN8tRCXL5Vc9gQrxRyHHyn7J6P2DCC8cSQKDKT <button class="copy" aria-label="Copy wallet address">COPY</button></div>
+          </div>
+          <div class="method animate">
+            <h3>Bitcoin (BTC)</h3>
+            <p>Secure crypto support via Bitcoin network.</p>
+            <div class="wallet-box" data-wallet="bc1qmkptg6wqn9sjlx6wf7dk0px0yq4ynr4ukj2x8c">bc1qmkptg6wqn9sjlx6wf7dk0px0yq4ynr4ukj2x8c <button class="copy" aria-label="Copy wallet address">COPY</button></div>
+          </div>
+          <div class="method animate">
+            <h3>Other Cryptocurrencies</h3>
+            <p>ETH / ERC-20, LTC, DOGE available on request.</p>
+            <a href="mailto:yashabalam707@gmail.com" class="btn ghost">Request Address</a>
+          </div>
+          <div class="method animate">
+            <h3>Enterprise Partnerships</h3>
+            <p>Strategic innovation collaboration & white-label solutions.</p>
+            <a href="mailto:yashabalam707@gmail.com" class="btn primary">Discuss →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="goals" id="goals">
+      <div class="container">
+        <h2 style="font-family:'Share Tech Mono',monospace; font-size:1.7rem; background:linear-gradient(90deg,#fff,#b9ffd0,#00ff41 70%); -webkit-background-clip:text; background-clip:text; color:transparent;">Current Funding Goals</h2>
+        <ul class="goal-list" id="goal-list">
+          <li class="goal animate" data-target="3000" data-current="0">
+            <h4>AI Script Generation Engine (NMAP-AI)</h4>
+            <p>Advanced ML modules for adaptive scanning orchestration & script synthesis.</p>
+            <div class="progress" style="--p:0%"></div>
+            <small class="amounts">$0 / $3,000</small>
+          </li>
+          <li class="goal animate" data-target="5000" data-current="0">
+            <h4>Professional Cross-Platform GUI</h4>
+            <p>Modern desktop build with real-time analytics and modular plugin system.</p>
+            <div class="progress" style="--p:0%"></div>
+            <small class="amounts">$0 / $5,000</small>
+          </li>
+          <li class="goal animate" data-target="10000" data-current="0">
+            <h4>Enterprise Automation Suite</h4>
+            <p>Complete enterprise-grade orchestration & security automation platform.</p>
+            <div class="progress" style="--p:0%"></div>
+            <small class="amounts">$0 / $10,000</small>
+          </li>
+        </ul>
+        <div class="donation-cta">
+          <a class="btn primary" href="#methods">Choose Method</a>
+          <a class="btn ghost" href="DONATE.md">Full Details (Markdown)</a>
+          <a class="btn ghost" href="index.html#support">Tier Overview</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="security" id="security">
+      <div class="container">
+        <h3>Security & Transparency</h3>
+        <ul>
+          <li>Verified wallet addresses (displayed above)</li>
+          <li>No storage of payment credentials</li>
+          <li>Open-source development focus & public roadmap</li>
+          <li>Quarterly impact & allocation reports (upon first funding)</li>
+          <li>Refund policy: 30 days (case by case)</li>
+        </ul>
+        <p style="font-size:.7rem; letter-spacing:.5px; color:#5a5f68;">For verification or large transfers (&gt;$1000), email: <a href="mailto:yashabalam707@gmail.com" style="color:var(--accent); text-decoration:none;">yashabalam707@gmail.com</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>
+        <h4>About</h4>
+        <p style="font-size:.75rem; color:#8a8f98; line-height:1.4;">Led by Yashab Alam, ZehraSec advances intelligent security tooling, research, and global education.</p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <a href="index.html#projects">Projects</a><br />
+        <a href="index.html#research">Research</a><br />
+        <a href="index.html#achievements">Achievements</a><br />
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a href="https://www.linkedin.com/in/yashab-alam" target="_blank" rel="noopener">LinkedIn</a><br />
+        <a href="https://github.com/yashab-cyber" target="_blank" rel="noopener">GitHub</a><br />
+        <a href="https://www.zehrasec.com" target="_blank" rel="noopener">Website</a><br />
+        <a href="mailto:yashabalam707@gmail.com">Email</a>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <a href="#methods">Methods</a><br />
+        <a href="#goals">Goals</a><br />
+        <a href="#security">Security</a><br />
+        <a href="DONATE.md">Markdown Doc</a>
+      </div>
+    </div>
+    <div class="container">
+      <p class="copy">&copy; <span id="year"></span> Yashab Alam • Securing the digital world with AI.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Copy buttons for wallet addresses
+    document.querySelectorAll('.wallet-box .copy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.closest('.wallet-box');
+        const addr = parent.getAttribute('data-wallet');
+        if (!addr) return;
+        navigator.clipboard.writeText(addr).then(()=> {
+          const orig = btn.textContent;
+            btn.textContent = 'COPIED';
+            setTimeout(()=> btn.textContent = orig, 2200);
+        });
+      });
+    });
+
+    // Funding goals dynamic progress (placeholder: could fetch real values)
+    function updateGoals(){
+      document.querySelectorAll('.goal').forEach(g => {
+        const target = +g.getAttribute('data-target');
+        const current = +g.getAttribute('data-current');
+        const pct = target ? Math.min(100, (current/target)*100) : 0;
+        const bar = g.querySelector('.progress');
+        if(bar) bar.style.setProperty('--p', pct + '%');
+        const amounts = g.querySelector('.amounts');
+        if(amounts) amounts.textContent = `$${current.toLocaleString()} / $${target.toLocaleString()}`;
+      });
+    }
+    updateGoals();
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
