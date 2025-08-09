@@ -1,0 +1,16 @@
+{
+  "name": "Yashab Alam Portfolio",
+  "short_name": "Yashab",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#00ff41",
+  "description": "Cybersecurity Expert & AI Researcher Portfolio",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/?size=128&id=23264&format=png&color=00FF41",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
