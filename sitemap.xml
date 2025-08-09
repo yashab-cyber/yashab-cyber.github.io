@@ -11,6 +11,16 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://yashabalam.me/projects.html</loc>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://yashabalam.me/research.html</loc>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://yashabalam.me/DONATE.md</loc>
     <priority>0.40</priority>
     <changefreq>monthly</changefreq>
