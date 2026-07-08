@@ -1738,3 +1738,10 @@ svg {
     justify-content: center;
   }
 }
+
+/* GitHub Stats Card Hover */
+.github-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary) !important;
+  box-shadow: var(--shadow-card-hover) !important;
+}
