@@ -542,10 +542,11 @@
 
   // ── Typewriter Effect ──────────────────────────────────
   function setupTypewriter() {
-    const el = document.getElementById('typewriter');
+    const el = document.getElementById('logo-typewriter');
     if (!el) return;
 
     const phrases = [
+      'YA',
       'Cybersecurity Expert',
       'Open Source Builder',
       'AI/ML Tool Builder',

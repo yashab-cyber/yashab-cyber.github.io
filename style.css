@@ -202,7 +202,7 @@ svg {
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 900;
   background: var(--gradient-accent);
   -webkit-background-clip: text;
@@ -210,6 +210,25 @@ svg {
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
   filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.45));
+  display: inline-flex;
+  align-items: center;
+  min-width: 220px;
+  white-space: nowrap;
+}
+
+.logo-cursor {
+  color: var(--accent-primary);
+  animation: logo-blink 0.8s infinite step-end;
+  margin-left: 3px;
+  font-weight: 500;
+  font-family: monospace;
+  font-size: 1.25rem;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 127, 0.5));
+}
+
+@keyframes logo-blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .nav-list {
