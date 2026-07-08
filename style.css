@@ -388,6 +388,39 @@ svg {
   -webkit-text-fill-color: transparent;
 }
 
+.typing-wrapper {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out 0.15s both;
+}
+
+.typing-dynamic {
+  margin-left: 8px;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 127, 0.45));
+}
+
+.typing-cursor {
+  color: var(--accent-primary);
+  animation: typing-blink 0.8s infinite step-end;
+  margin-left: 2px;
+  font-weight: 400;
+}
+
+@keyframes typing-blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-subtitle {
   font-size: 1.15rem;
   color: var(--text-secondary);

@@ -18,6 +18,7 @@
     setupContactForm();
     fetchGitHubStats();
     fetchProjectStats();
+    setupTypewriter();
     setYear();
   }
 
@@ -537,6 +538,51 @@
           if (forksEl) forksEl.textContent = metric.forks;
         });
     });
+  }
+
+  // ── Typewriter Effect ──────────────────────────────────
+  function setupTypewriter() {
+    const el = document.getElementById('typewriter');
+    if (!el) return;
+
+    const phrases = [
+      'Cybersecurity Expert',
+      'Open Source Builder',
+      'AI/ML Tool Builder',
+      'Tech Entrepreneur'
+    ];
+
+    let phraseIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+
+    function type() {
+      const currentPhrase = phrases[phraseIdx];
+
+      if (isDeleting) {
+        el.textContent = currentPhrase.substring(0, charIdx - 1);
+        charIdx--;
+        typingSpeed = 50;
+      } else {
+        el.textContent = currentPhrase.substring(0, charIdx + 1);
+        charIdx++;
+        typingSpeed = 120 - Math.random() * 40;
+      }
+
+      if (!isDeleting && charIdx === currentPhrase.length) {
+        isDeleting = true;
+        typingSpeed = 2000; // Pause at end of text
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        typingSpeed = 500; // Pause before typing next phrase
+      }
+
+      setTimeout(type, typingSpeed);
+    }
+
+    type();
   }
 
   // ── Set Year ───────────────────────────────────────────
