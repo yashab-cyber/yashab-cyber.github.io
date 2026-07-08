@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Building OpenDroid: An Autonomous AI Agent for Android | Yashab Alam Blog</title>
+  <meta name="description" content="A deep dive into OpenDroid — an autonomous AI agent for Android featuring self-planning, device control, vision engine, memory systems, and Jetpack Compose UI." />
+  <meta name="theme-color" content="#6366f1" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://img.icons8.com/?size=100&id=23264&format=png&color=6366F1" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* ── Blog Details Page Specific Styling ───────────────── */
+    .blog-header {
+      padding: 140px 0 60px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 70%;
+      height: 140%;
+      background: radial-gradient(ellipse at center, rgba(20, 184, 166, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      color: var(--text-secondary);
+      transition: all var(--transition-fast);
+    }
+
+    .back-link:hover {
+      color: var(--accent-primary);
+      transform: translateX(-4px);
+    }
+
+    .blog-category-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      background: rgba(20, 184, 166, 0.08);
+      color: var(--accent-tertiary);
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(20, 184, 166, 0.15);
+    }
+
+    .blog-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+      margin-top: 20px;
+    }
+
+    .blog-meta-row svg {
+      vertical-align: -2px;
+    }
+
+    /* Article Content */
+    .article-container {
+      padding: 80px 0;
+    }
+
+    .article-content {
+      font-size: 1.08rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
+    }
+
+    .article-content p {
+      margin-bottom: 28px;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 48px 0 24px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 32px 0 16px;
+    }
+
+    /* Styled Tables */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin: 24px 0 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+      background: var(--bg-secondary);
+    }
+
+    th {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-weight: 700;
+      padding: 14px 20px;
+      border-bottom: 2px solid var(--border-medium);
+    }
+
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--bg-primary);
+    }
+
+    /* Memory Block Diagram Styles */
+    .memory-diagram {
+      background: #0d1117;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 36px 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'JetBrains Mono', monospace;
+      color: #c9d1d9;
+    }
+
+    .memory-title {
+      text-align: center;
+      font-weight: bold;
+      color: #58a6ff;
+      margin-bottom: 24px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+      padding-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .memory-box {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: var(--radius-sm);
+      padding: 16px 12px;
+      text-align: center;
+      transition: all var(--transition-fast);
+    }
+
+    .memory-box:hover {
+      border-color: #58a6ff;
+      background: #1f242c;
+    }
+
+    .memory-box strong {
+      display: block;
+      color: #f0f6fc;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .memory-box span {
+      font-size: 0.78rem;
+      color: #8b949e;
+      line-height: 1.4;
+      display: block;
+    }
+
+    .memory-full-width {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      transition: all var(--transition-fast);
+    }
+
+    .memory-full-width:hover {
+      border-color: #58a6ff;
+      background: #1f242c;
+    }
+
+    .memory-full-width strong {
+      display: block;
+      color: #58a6ff;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    .memory-full-width span {
+      font-size: 0.78rem;
+      color: #8b949e;
+    }
+
+    /* Code Snippet Styles */
+    .code-window {
+      background: #0d1117;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: 32px 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .code-window-header {
+      background: #161b22;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .code-window-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .code-window-title {
+      font-size: 0.78rem;
+      color: #8b949e;
+      font-family: 'JetBrains Mono', monospace;
+      margin-left: 8px;
+    }
+
+    .code-pre {
+      padding: 24px;
+      margin: 0;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #c9d1d9;
+      line-height: 1.6;
+    }
+
+    /* Blockquote Quote Styles */
+    .quote-card {
+      border-left: 4px solid var(--accent-tertiary);
+      background: var(--bg-tertiary);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      margin: 32px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+
+    /* UI Spec Card */
+    .ui-spec-card {
+      background: #080C10;
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      border: 1px solid rgba(0, 255, 136, 0.15);
+      color: #f0f6fc;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(8, 12, 16, 0.8);
+    }
+
+    .ui-spec-card::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -30%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .ui-spec-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .ui-spec-title {
+      font-weight: 800;
+      color: #00FF88;
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ui-orb-preview {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ui-orb-dot {
+      width: 14px;
+      height: 14px;
+      background: #00FF88;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #00FF88;
+      animation: orb-pulse 1.8s infinite ease-in-out;
+    }
+
+    @keyframes orb-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 20px #00FF88; }
+    }
+
+    .ui-spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .ui-spec-item strong {
+      display: block;
+      color: #00FF88;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .ui-spec-item span {
+      font-size: 0.95rem;
+      color: #8b949e;
+    }
+
+    @media (max-width: 768px) {
+      .memory-grid {
+        grid-template-columns: 1fr;
+      }
+      .ui-spec-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header -->
+  <header class="site-header scrolled">
+    <div class="container header-inner">
+      <a href="../index.html" class="logo">YA</a>
+      <nav aria-label="Primary navigation">
+        <ul class="nav-list">
+          <li><a href="../index.html#about">About</a></li>
+          <li><a href="../index.html#projects">Projects</a></li>
+          <li><a href="../index.html#skills">Skills</a></li>
+          <li><a href="../index.html#blog" class="active">Blog</a></li>
+          <li><a href="../index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Blog Header Section -->
+  <section class="blog-header" role="banner">
+    <div class="container narrow">
+      <a href="../index.html#blog" class="back-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back to Blog
+      </a>
+      <span class="blog-category-badge">Android & AI</span>
+      <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; line-height: 1.2; letter-spacing: -1px;">
+        Building OpenDroid: An Autonomous AI Agent for Android
+      </h1>
+      <div class="blog-meta-row">
+        <span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+          November 2024
+        </span>
+        <span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          6 min read
+        </span>
+        <span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          By Yashab Alam
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Article Content -->
+  <main id="main" class="article-container">
+    <div class="container narrow">
+      <article class="article-content">
+        
+        <p>
+          OpenDroid isn't just another chatbot wrapper. It is a fully autonomous, local AI agent that lives on your Android device and actively runs operations on your behalf.
+        </p>
+
+        <p>
+          Unlike static conversational bots that are confined to answering text inputs within sandbox walls, OpenDroid interfaces directly with the Android runtime and system layers. It translates natural, multi-action user requests into concrete action plans, runs them, and dynamically adapts if any part of the plan encounters obstacles.
+        </p>
+
+        <div class="quote-card">
+          "Check if it's going to rain tomorrow, and if so, text my wife that I'll be late and set an alarm for 6 PM."
+        </div>
+
+        <p>
+          When fed this instruction, OpenDroid builds a 3-step action chain, handles contact lookup, calls a weather checker, issues an SMS payload, and programs a system alarm — executing the entire sequence without the user lifting a finger.
+        </p>
+
+        <!-- Section: Features -->
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+          Features
+        </h2>
+
+        <h3>🧠 Autonomous Agent Engine</h3>
+        <p>
+          The core architecture of OpenDroid centers around a state-evaluation execution loop. The agent relies on a multi-modal planner to split tasks, manage dependencies, and correct itself:
+        </p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Self-Planning</strong></td>
+                <td>Breaks complex commands into sequential steps with dependency tracking.</td>
+              </tr>
+              <tr>
+                <td><strong>Re-Evaluation</strong></td>
+                <td>Monitors execution results and dynamically replans when steps fail.</td>
+              </tr>
+              <tr>
+                <td><strong>Compound Intent Guard</strong></td>
+                <td>Smart detection of multi-action commands (e.g. "open WhatsApp and send message").</td>
+              </tr>
+              <tr>
+                <td><strong>Contact Disambiguation</strong></td>
+                <td>4-tier contact resolution with fuzzy matching and relationship aliases ("call dad").</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>📱 Full Device Control</h3>
+        <p>
+          OpenDroid hooks directly into various device service APIs to trigger system adjustments, manage scheduling, control media channels, and communicate.
+        </p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Examples</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>System</strong></td>
+                <td>Brightness, WiFi, Bluetooth, Flashlight, DND, Volume, Screenshot</td>
+              </tr>
+              <tr>
+                <td><strong>Communication</strong></td>
+                <td>Calls, SMS, WhatsApp messages, Email drafts</td>
+              </tr>
+              <tr>
+                <td><strong>Productivity</strong></td>
+                <td>Alarms, Timers, Reminders, Calendar events, Notes</td>
+              </tr>
+              <tr>
+                <td><strong>Navigation</strong></td>
+                <td>Google Maps directions, Uber/Ola booking</td>
+              </tr>
+              <tr>
+                <td><strong>Media</strong></td>
+                <td>Play/pause music, YouTube search, camera</td>
+              </tr>
+              <tr>
+                <td><strong>Finance</strong></td>
+                <td>UPI payments, bill splitting, currency conversion</td>
+              </tr>
+              <tr>
+                <td><strong>Smart Home</strong></td>
+                <td>Google Home device control</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>👁️ Vision Engine</h3>
+        <p>
+          When traditional API channels are blocked or app interfaces lack developer endpoints, the **Vision Engine** takes over. Using the Android Accessibility API, OpenDroid captures live screenshots of the active foreground app and passes the raw image frames directly to vision-capable LLMs (like GPT-4o or Gemini 1.5 Flash). The agent analyzes the UI structure visually to locate and tap buttons. On older, lower-spec devices, it gracefully falls back to accessibility tree text-scraping for efficiency.
+        </p>
+
+        <h3>🗄️ Multi-Tier Memory System</h3>
+        <p>
+          OpenDroid incorporates a stateful, hierarchical memory module that balances real-time task data with persistent historical records:
+        </p>
+
+        <div class="memory-diagram" aria-label="OpenDroid Memory System Architecture">
+          <div class="memory-title">OpenDroid Memory System</div>
+          <div class="memory-grid">
+            <div class="memory-box">
+              <strong>Working Memory</strong>
+              <span>Current task details & short-term parameters</span>
+            </div>
+            <div class="memory-box">
+              <strong>Episodic Memory</strong>
+              <span>Logs of previous tasks, execution steps, and historical results</span>
+            </div>
+            <div class="memory-box">
+              <strong>Semantic Memory</strong>
+              <span>Long-term user preferences, settings, and relationships</span>
+            </div>
+          </div>
+          <div class="memory-full-width">
+            <strong>Procedural Memory</strong>
+            <span>Custom, user-defined macro workflows & automation scripts</span>
+          </div>
+        </div>
+
+        <h3>🎙️ Voice Interface</h3>
+        <p>
+          OpenDroid supports fully hands-free operation designed to bypass manual keyboard input:
+        </p>
+        <ul>
+          <li><strong>Offline Wake Word Detection:</strong> Highly efficient local listeners that scan for the phrase "OpenDroid" to wake up without incurring cloud costs or high battery draw.</li>
+          <li><strong>Speech-to-Text:</strong> Built-in Whisper model optimization to translate spoken words into command texts quickly.</li>
+          <li><strong>Text-to-Speech:</strong> Rich vocal feedback powered by ElevenLabs premium voice generation for natural conversation.</li>
+        </ul>
+
+        <h3>🎨 Premium UI</h3>
+        <p>
+          A powerful agent deserves an equally state-of-the-art interface. The OpenDroid client is built using Jetpack Compose to bring a clean, futuristic glassmorphic design:
+        </p>
+
+        <div class="ui-spec-card">
+          <div class="ui-spec-header">
+            <div class="ui-spec-title">
+              <div class="ui-orb-dot"></div>
+              Jetpack Compose Specs
+            </div>
+            <span class="code-window-title" style="color: #00FF88;">OpenDroid v1.0</span>
+          </div>
+          <div class="ui-spec-grid">
+            <div class="ui-spec-item">
+              <strong>Color Palette</strong>
+              <span>Deep Navy (#080C10) + Neon Green (#00FF88)</span>
+            </div>
+            <div class="ui-spec-item">
+              <strong>Interactive Orb</strong>
+              <span>Pulsing audio animation synchronized during active speech capture</span>
+            </div>
+            <div class="ui-spec-item">
+              <strong>Latency Benchmarks</strong>
+              <span>Live performance tracking (ms) for all active model providers</span>
+            </div>
+            <div class="ui-spec-item">
+              <strong>Default Mode</strong>
+              <span>Strict dark theme to reduce OLED battery draw</span>
+            </div>
+          </div>
+        </div>
+
+        <h2 style="border-top: 1px solid var(--border-light); padding-top: 36px;">Conclusion</h2>
+        <p>
+          OpenDroid represents a shift from chatbots to **actionable AI agents**. By integrating low-level Android controls, vision engines, and stateful memory tiers, it transforms the mobile experience into something truly autonomous. You can explore the open-source code and track upcoming developments in the GitHub repository.
+        </p>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <span>&copy; <span id="year"></span> Yashab Alam. All rights reserved.</span>
+        <span>Built with
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--accent-secondary)" stroke="var(--accent-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          and
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>

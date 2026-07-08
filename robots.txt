@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://yashabalam.me/sitemap.xml

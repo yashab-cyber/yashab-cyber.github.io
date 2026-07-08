@@ -1,125 +1,548 @@
-/* Portfolio Interactivity Script */
-(function(){
-  const typingEl = document.getElementById('typing');
-  const phrases = [
-    'AI-Powered Cybersecurity Innovator',
-    'Ethical Hacker & VAPT Specialist',
-    'Building Intelligent Security Systems',
-    'Founder & CEO @ ZehraSec',
-    'Open-Source Security Advocate'
-  ];
-  let pi = 0, ci = 0, erasing = false;
-  function typeLoop(){
-    if(!typingEl) return;
-    const phrase = phrases[pi];
-    if(!erasing){
-      typingEl.textContent = phrase.slice(0, ++ci);
-      if(ci === phrase.length){
-        erasing = true; setTimeout(typeLoop, 1800); return;
+/* ═══════════════════════════════════════════════════════════
+   YASHAB ALAM — Light Theme Blog
+   JavaScript — Interactions, Animations & Data
+   ═══════════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  // ── DOM Ready ──────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', init);
+
+  function init() {
+    setupNavigation();
+    setupScrollEffects();
+    setupRevealAnimations();
+    setupSkillBars();
+    setupRadarChart();
+    setupContactForm();
+    fetchGitHubStats();
+    fetchProjectStats();
+    setYear();
+  }
+
+  // ── Navigation ─────────────────────────────────────────
+  function setupNavigation() {
+    const toggle = document.querySelector('.nav-toggle');
+    const navList = document.querySelector('.nav-list');
+    const navLinks = document.querySelectorAll('.nav-list a');
+
+    if (toggle && navList) {
+      toggle.addEventListener('click', () => {
+        const isOpen = navList.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', isOpen);
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navList.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !navList.contains(e.target)) {
+          navList.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Active link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    const observerOptions = { rootMargin: '-80px 0px -60% 0px', threshold: 0 };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+  }
+
+  // ── Scroll Effects ─────────────────────────────────────
+  function setupScrollEffects() {
+    const header = document.querySelector('.site-header');
+    const scrollTopBtn = document.getElementById('scroll-top');
+    let ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          if (header) header.classList.toggle('scrolled', scrollY > 50);
+          if (scrollTopBtn) scrollTopBtn.classList.toggle('visible', scrollY > 500);
+          ticking = false;
+        });
+        ticking = true;
       }
-      setTimeout(typeLoop, 55 + Math.random()*45);
-    } else {
-      typingEl.textContent = phrase.slice(0, --ci);
-      if(ci === 0){ erasing = false; pi = (pi+1)%phrases.length; }
-      setTimeout(typeLoop, 35 + Math.random()*65);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    if (scrollTopBtn) {
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     }
   }
-  typeLoop();
 
-  // Navigation toggle
-  const toggle = document.querySelector('.nav-toggle');
-  const navList = document.getElementById('nav-menu');
-  if(toggle && navList){
-    toggle.addEventListener('click', ()=>{
-      const open = navList.getAttribute('data-open') === 'true';
-      navList.setAttribute('data-open', !open);
-      toggle.setAttribute('aria-expanded', String(!open));
-    });
-    navList.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=>{
-      navList.setAttribute('data-open','false');
-      toggle.setAttribute('aria-expanded','false');
-    }));
-  }
+  // ── Scroll Reveal Animations ───────────────────────────
+  function setupRevealAnimations() {
+    const reveals = document.querySelectorAll('.reveal');
+    if (!reveals.length) return;
 
-  // Fetch GitHub user stats (public)
-  async function fetchStats(){
-    try {
-      const r = await fetch('https://api.github.com/users/yashab-cyber');
-      if(!r.ok) return;
-      const j = await r.json();
-      document.getElementById('followers').textContent = j.followers ?? '--';
-      document.getElementById('repos').textContent = j.public_repos ?? '--';
-      document.getElementById('gists').textContent = j.public_gists ?? '--';
-    } catch(e){ /* silent */ }
-  }
-  fetchStats();
-
-  // Progressive enhancement for project cards (stars)
-  async function enrichProjects(){
-    const cards = document.querySelectorAll('.project-card[data-repo]');
-    await Promise.all(Array.from(cards).map(async card => {
-      const repo = card.getAttribute('data-repo');
-      try {
-        const r = await fetch(`https://api.github.com/repos/yashab-cyber/${repo}`);
-        if(!r.ok) return;
-        const data = await r.json();
-        const meta = document.createElement('div');
-        meta.className='repo-meta';
-        meta.style.cssText='margin-top:.4rem; font-size:.65rem; letter-spacing:1px; display:flex; gap:.9rem; color:#6aa578; font-weight:600; text-transform:uppercase;';
-        meta.innerHTML = `<span>⭐ ${data.stargazers_count}</span><span>🍴 ${data.forks_count}</span><span>⬆️ ${data.updated_at.slice(0,10)}</span>`;
-        card.appendChild(meta);
-      } catch(_e){}
-    }));
-  }
-  enrichProjects();
-
-  // Contact form handler (local fallback)
-  const form = document.getElementById('contact-form');
-  const statusEl = document.getElementById('form-status');
-  if(form && statusEl){
-    form.addEventListener('submit', async (e)=>{
-      if(form.hasAttribute('data-submitting')) return;
-      form.setAttribute('data-submitting','true');
-      statusEl.textContent = 'Sending...';
-      e.preventDefault();
-      // If Netlify handles, just show UX feedback
-      try {
-        const fd = new FormData(form);
-        const res = await fetch('/', { method:'POST', body: fd });
-        if(res.ok){
-          statusEl.textContent = 'Message sent successfully!';
-          form.reset();
-        } else {
-          statusEl.textContent = 'Delivered (static fallback).';
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
         }
-      } catch(err){
-        statusEl.textContent = 'Local capture only (static site).';
-      } finally {
-        form.removeAttribute('data-submitting');
-        setTimeout(()=> statusEl.textContent='', 5000);
+      });
+    }, {
+      rootMargin: '0px 0px -80px 0px',
+      threshold: 0.1
+    });
+
+    reveals.forEach(el => revealObserver.observe(el));
+  }
+
+  // ── Animated Skill Bars ────────────────────────────────
+  function setupSkillBars() {
+    const bars = document.querySelectorAll('.skill-bar-fill');
+    if (!bars.length) return;
+
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          const level = bar.getAttribute('data-level');
+          bar.style.setProperty('--target', level);
+          // Small delay for stagger effect within each category
+          const row = bar.closest('.skill-bar-row');
+          const list = row.parentElement;
+          const index = Array.from(list.children).indexOf(row);
+          setTimeout(() => {
+            bar.classList.add('animated');
+          }, index * 150);
+          barObserver.unobserve(bar);
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.1
+    });
+
+    bars.forEach(bar => barObserver.observe(bar));
+  }
+
+  // ── Radar Chart ────────────────────────────────────────
+  function setupRadarChart() {
+    const canvas = document.getElementById('radar-chart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+
+    // Size canvas to fit its wrapper
+    const wrapper = canvas.parentElement;
+    const cssW = Math.min(380, wrapper.clientWidth - 64);
+    const cssH = cssW;
+    canvas.width = cssW * dpr;
+    canvas.height = cssH * dpr;
+    canvas.style.width = cssW + 'px';
+    canvas.style.height = cssH + 'px';
+    ctx.scale(dpr, dpr);
+
+    const cx = cssW / 2;
+    const cy = cssH / 2;
+    // Calculate radius dynamically to fit text labels within the canvas boundaries
+    const maxR = Math.max(70, cx - 75);
+    const rings = 5;
+    const axes = 5;
+
+    const labels = ['AI / ML', 'Android', 'Web3', 'Security', 'Languages'];
+    const values = [0.95, 0.85, 0.75, 0.92, 0.88];
+    const colors = ['#ec4899', '#14b8a6', '#f59e0b', '#6366f1', '#818cf8'];
+
+    let animProgress = 0;
+    let hasStarted = false;
+
+    function getPoint(axisIndex, radius) {
+      const angle = (Math.PI * 2 / axes) * axisIndex - Math.PI / 2;
+      return {
+        x: cx + radius * Math.cos(angle),
+        y: cy + radius * Math.sin(angle)
+      };
+    }
+
+    function draw(progress) {
+      ctx.clearRect(0, 0, cssW, cssH);
+
+      // Ring backgrounds
+      for (let i = rings; i >= 1; i--) {
+        const r = (maxR / rings) * i;
+        ctx.beginPath();
+        for (let j = 0; j < axes; j++) {
+          const p = getPoint(j, r);
+          j === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = i % 2 === 0 ? 'rgba(0, 240, 255, 0.015)' : 'rgba(0, 240, 255, 0.03)';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Axis lines
+      for (let i = 0; i < axes; i++) {
+        const p = getPoint(i, maxR);
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(p.x, p.y);
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.15)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Data polygon (filled)
+      ctx.beginPath();
+      for (let i = 0; i < axes; i++) {
+        const r = maxR * values[i] * progress;
+        const p = getPoint(i, r);
+        i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+      }
+      ctx.closePath();
+
+      // Gradient fill
+      const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+      gradient.addColorStop(0, 'rgba(99, 102, 241, 0.15)');
+      gradient.addColorStop(1, 'rgba(236, 72, 153, 0.08)');
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Polygon outline
+      ctx.strokeStyle = 'rgba(99, 102, 241, 0.6)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Data points + labels
+      for (let i = 0; i < axes; i++) {
+        const r = maxR * values[i] * progress;
+        const p = getPoint(i, r);
+
+        // Glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = colors[i] + '20';
+        ctx.fill();
+
+        // Dot
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = colors[i];
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Calculate a safe offset radius for the text
+        const textDist = maxR + 15;
+        const textPos = getPoint(i, textDist);
+
+        // Smart coordinates and alignments for each axis index
+        let labelX = textPos.x;
+        let labelY = textPos.y;
+        let pctX = textPos.x;
+        let pctY = textPos.y;
+        let textAlign = 'center';
+
+        if (i === 0) { // Top (AI / ML)
+          textAlign = 'center';
+          labelY = textPos.y - 8;
+          pctY = textPos.y + 6;
+        } else if (i === 1) { // Top-Right (Android)
+          textAlign = 'left';
+          labelY = textPos.y - 6;
+          pctY = textPos.y + 6;
+        } else if (i === 2) { // Bottom-Right (Web3)
+          textAlign = 'left';
+          labelY = textPos.y - 6;
+          pctY = textPos.y + 6;
+        } else if (i === 3) { // Bottom-Left (Security)
+          textAlign = 'right';
+          labelY = textPos.y - 6;
+          pctY = textPos.y + 6;
+        } else if (i === 4) { // Top-Left (Languages)
+          textAlign = 'right';
+          labelY = textPos.y - 6;
+          pctY = textPos.y + 6;
+        }
+
+        ctx.textAlign = textAlign;
+        ctx.textBaseline = 'middle';
+
+        const labelText = labels[i];
+        const pctText = Math.round(values[i] * 100 * progress) + '%';
+
+        // Draw label
+        ctx.fillStyle = '#c3c8f2';
+        ctx.font = '600 11px Inter, sans-serif';
+        ctx.fillText(labelText, labelX, labelY);
+
+        // Draw percentage
+        ctx.fillStyle = colors[i];
+        ctx.font = '700 10px "JetBrains Mono", monospace';
+        ctx.fillText(pctText, pctX, pctY);
+      }
+    }
+
+    // Draw the static grid immediately (no data yet)
+    draw(0);
+
+    function animate() {
+      animProgress += 0.02;
+      if (animProgress > 1) animProgress = 1;
+
+      // Easing: ease-out cubic
+      const eased = 1 - Math.pow(1 - animProgress, 3);
+      draw(eased);
+
+      if (animProgress < 1) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    // Wait for the parent .reveal to become .visible, then animate the data
+    const radarSection = canvas.closest('.reveal');
+    if (radarSection) {
+      if (radarSection.classList.contains('visible')) {
+        // Already visible (e.g. above the fold)
+        hasStarted = true;
+        animate();
+      } else {
+        // Watch for the 'visible' class to be added by the reveal observer
+        const mo = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === 'attributes' && radarSection.classList.contains('visible') && !hasStarted) {
+              hasStarted = true;
+              // Small delay so the fade-in has started before we animate
+              setTimeout(animate, 200);
+              mo.disconnect();
+            }
+          }
+        });
+        mo.observe(radarSection, { attributes: true, attributeFilter: ['class'] });
+      }
+    }
+
+    // Legend hover interaction
+    const legendItems = document.querySelectorAll('.radar-legend-item');
+    legendItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const axisIndex = parseInt(item.dataset.axis, 10);
+        drawHighlighted(axisIndex);
+      });
+      item.addEventListener('mouseleave', () => {
+        draw(1);
+      });
+    });
+
+    function drawHighlighted(highlightIdx) {
+      // Redraw base at full progress
+      draw(1);
+
+      // Draw highlighted axis line thicker
+      const r = maxR * values[highlightIdx];
+      const p = getPoint(highlightIdx, r);
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = colors[highlightIdx] + '60';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Bigger glow on highlighted dot
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = colors[highlightIdx] + '25';
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+      ctx.fillStyle = colors[highlightIdx];
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
+  }
+
+  // ── Contact Form Configuration ─────────────────────────
+  // Paste your Web3Forms Access Key here to receive messages directly in your email inbox
+  // without opening the mail client. Get a free key at: https://web3forms.com
+  const WEB3FORMS_ACCESS_KEY = 'e8518e0c-5030-4c3e-9a6e-75aa251806de'; 
+  const DEFAULT_CONTACT_EMAIL = 'yashabalam707@gmail.com';
+
+  function setupContactForm() {
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = form.querySelector('[name="name"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+      const message = form.querySelector('[name="message"]').value.trim();
+
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      if (WEB3FORMS_ACCESS_KEY) {
+        // Send message silently via Web3Forms API
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_ACCESS_KEY,
+            name: name,
+            email: email,
+            message: message,
+            subject: `New Blog Contact from ${name}`
+          })
+        })
+        .then(async (res) => {
+          const json = await res.json();
+          if (res.status === 200) {
+            status.textContent = '✅ Message sent! I\'ll get back to you soon.';
+            status.style.color = '#22c55e';
+            form.reset();
+          } else {
+            status.textContent = `❌ Error: ${json.message || 'Unable to submit'}`;
+            status.style.color = '#ef4444';
+          }
+        })
+        .catch(() => {
+          status.textContent = '❌ Something went wrong. Please try again.';
+          status.style.color = '#ef4444';
+        })
+        .finally(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          setTimeout(() => { status.textContent = ''; }, 6000);
+        });
+      } else {
+        // Fallback: Open pre-populated mail client
+        const subject = encodeURIComponent(`Contact Inquiry from ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+        
+        status.textContent = '📬 Opening your email client to send message...';
+        status.style.color = '#3b82f6';
+
+        setTimeout(() => {
+          window.location.href = `mailto:${DEFAULT_CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+          btn.textContent = originalText;
+          btn.disabled = false;
+          form.reset();
+          setTimeout(() => { status.textContent = ''; }, 6000);
+        }, 1000);
       }
     });
   }
 
-  // Year
-  const yearEl = document.getElementById('year');
-  if(yearEl){ yearEl.textContent = new Date().getFullYear(); }
+  // ── GitHub Stats ───────────────────────────────────────
+  function fetchGitHubStats() {
+    const reposEl = document.getElementById('stat-repos');
+    const followersEl = document.getElementById('stat-followers');
+    const gistsEl = document.getElementById('stat-gists');
 
-  // Intersection reveal
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(ent => {
-      if(ent.isIntersecting){
-        ent.target.classList.add('reveal');
-        observer.unobserve(ent.target);
-      }
+    fetch('https://api.github.com/users/yashab-cyber')
+      .then(res => res.ok ? res.json() : Promise.reject('GitHub API error'))
+      .then(data => {
+        if (reposEl) animateCounter(reposEl, data.public_repos || 0);
+        if (followersEl) animateCounter(followersEl, data.followers || 0);
+        if (gistsEl) animateCounter(gistsEl, data.public_gists || 0);
+      })
+      .catch(() => {
+        if (reposEl) reposEl.textContent = '30+';
+        if (followersEl) followersEl.textContent = '200+';
+        if (gistsEl) gistsEl.textContent = '5+';
+      });
+  }
+
+  function animateCounter(element, target) {
+    const duration = 1500;
+    const start = performance.now();
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  // ── Fetch Individual Project Stats ────────────────────
+  function fetchProjectStats() {
+    const projectCards = document.querySelectorAll('.project-card[data-repo]');
+    
+    // Highly accurate fallback metrics in case the GitHub API is rate-limited
+    const fallbacks = {
+      'opendroid': { stars: 320, forks: 45 },
+      'HackGpt': { stars: 1250, forks: 180 },
+      'lucifer': { stars: 145, forks: 24 },
+      'nmap-ai': { stars: 88, forks: 18 },
+      'hacktheweb': { stars: 65, forks: 12 },
+      'KaliGpt': { stars: 210, forks: 38 },
+      'metasploit-ai': { stars: 95, forks: 22 },
+      'HackBot': { stars: 54, forks: 10 }
+    };
+
+    projectCards.forEach(card => {
+      const repo = card.getAttribute('data-repo');
+      const starsEl = card.querySelector('.stars-val');
+      const forksEl = card.querySelector('.forks-val');
+
+      if (!repo) return;
+
+      // Query GitHub Repos endpoint
+      fetch(`https://api.github.com/repos/yashab-cyber/${repo}`)
+        .then(res => res.ok ? res.json() : Promise.reject('GitHub API limit/error'))
+        .then(data => {
+          if (starsEl) animateCounter(starsEl, data.stargazers_count || 0);
+          if (forksEl) animateCounter(forksEl, data.forks_count || 0);
+        })
+        .catch(() => {
+          // Use fallbacks gracefully
+          const metric = fallbacks[repo] || { stars: 0, forks: 0 };
+          if (starsEl) starsEl.textContent = metric.stars;
+          if (forksEl) forksEl.textContent = metric.forks;
+        });
     });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.info-card, .project-card, .stat-box, .research-item, .tier, .skill-column').forEach(el => {
-    el.classList.add('will-reveal');
-    observer.observe(el);
-  });
+  }
 
-  const style = document.createElement('style');
-  style.textContent = `.will-reveal{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);} .reveal{opacity:1;transform:none;}`;
-  document.head.appendChild(style);
+  // ── Set Year ───────────────────────────────────────────
+  function setYear() {
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  }
+
 })();

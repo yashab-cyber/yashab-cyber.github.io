@@ -2,27 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yashabalam.me/</loc>
-    <priority>1.00</priority>
+    <lastmod>2024-12-01</lastmod>
     <changefreq>weekly</changefreq>
-  </url>
-  <url>
-    <loc>https://yashabalam.me/donation.html</loc>
-    <priority>0.90</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://yashabalam.me/projects.html</loc>
-    <priority>0.80</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://yashabalam.me/research.html</loc>
-    <priority>0.80</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://yashabalam.me/DONATE.md</loc>
-    <priority>0.40</priority>
-    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
   </url>
 </urlset>
