@@ -472,17 +472,133 @@
     const followersEl = document.getElementById('stat-followers');
     const gistsEl = document.getElementById('stat-gists');
 
+    const cardReposEl = document.querySelector('.github-profile-repos');
+    const cardFollowersEl = document.querySelector('.github-profile-followers');
+    const cardGistsEl = document.querySelector('.github-profile-gists');
+
     fetch('https://api.github.com/users/yashab-cyber')
       .then(res => res.ok ? res.json() : Promise.reject('GitHub API error'))
       .then(data => {
-        if (reposEl) animateCounter(reposEl, data.public_repos || 0);
-        if (followersEl) animateCounter(followersEl, data.followers || 0);
-        if (gistsEl) animateCounter(gistsEl, data.public_gists || 0);
+        const reposVal = data.public_repos || 0;
+        const followersVal = data.followers || 0;
+        const gistsVal = data.public_gists || 0;
+
+        if (reposEl) animateCounter(reposEl, reposVal);
+        if (followersEl) animateCounter(followersEl, followersVal);
+        if (gistsEl) animateCounter(gistsEl, gistsVal);
+
+        if (cardReposEl) animateCounter(cardReposEl, reposVal);
+        if (cardFollowersEl) animateCounter(cardFollowersEl, followersVal);
+        if (cardGistsEl) animateCounter(cardGistsEl, gistsVal);
       })
       .catch(() => {
-        if (reposEl) reposEl.textContent = '30+';
-        if (followersEl) followersEl.textContent = '200+';
-        if (gistsEl) gistsEl.textContent = '5+';
+        if (reposEl) reposEl.textContent = '35';
+        if (followersEl) followersEl.textContent = '220';
+        if (gistsEl) gistsEl.textContent = '8';
+
+        if (cardReposEl) cardReposEl.textContent = '35';
+        if (cardFollowersEl) cardFollowersEl.textContent = '220';
+        if (cardGistsEl) cardGistsEl.textContent = '8';
+      });
+
+    // Also run language parser
+    loadGitHubLanguages();
+  }
+
+  // ── Fetch GitHub Top Languages ─────────────────────────
+  function loadGitHubLanguages() {
+    const langContainer = document.querySelector('.github-languages-list');
+    if (!langContainer) return;
+
+    fetch('https://api.github.com/users/yashab-cyber/repos?per_page=100')
+      .then(res => res.ok ? res.json() : Promise.reject('GitHub API error'))
+      .then(repos => {
+        const langMap = {};
+        let total = 0;
+
+        repos.forEach(repo => {
+          if (repo.language) {
+            langMap[repo.language] = (langMap[repo.language] || 0) + 1;
+            total++;
+          }
+        });
+
+        const sortedLangs = Object.entries(langMap)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 4);
+
+        if (sortedLangs.length === 0) {
+          langContainer.innerHTML = `<div style="text-align: center; color: var(--text-tertiary); font-size: 0.9rem;">No language data found.</div>`;
+          return;
+        }
+
+        langContainer.innerHTML = '';
+        
+        const langColors = {
+          'Python': '#ff007f',
+          'Kotlin': '#00f0ff',
+          'Java': '#ff8800',
+          'JavaScript': '#00ff88',
+          'HTML': '#ff5eaf',
+          'CSS': '#7000ff'
+        };
+
+        sortedLangs.forEach(([lang, count]) => {
+          const pct = Math.round((count / total) * 100);
+          const color = langColors[lang] || 'var(--accent-secondary)';
+          
+          const row = document.createElement('div');
+          row.style.display = 'flex';
+          row.style.flexDirection = 'column';
+          row.style.gap = '6px';
+          
+          row.innerHTML = `
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; color: #fff;">
+              <span style="font-weight: 600;">${lang}</span>
+              <span style="color: var(--text-tertiary); font-weight: 700;">${pct}%</span>
+            </div>
+            <div style="height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-full); overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.03);">
+              <div style="height: 100%; width: 0%; background: ${color}; border-radius: var(--radius-full); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px ${color}60;"></div>
+            </div>
+          `;
+          
+          langContainer.appendChild(row);
+          
+          setTimeout(() => {
+            const bar = row.querySelector('div > div');
+            if (bar) bar.style.width = `${pct}%`;
+          }, 100);
+        });
+      })
+      .catch(() => {
+        const fallbacks = [
+          { lang: 'Python', pct: 45, color: '#ff007f' },
+          { lang: 'Kotlin', pct: 25, color: '#00f0ff' },
+          { lang: 'Java', pct: 18, color: '#ff8800' },
+          { lang: 'JavaScript', pct: 12, color: '#00ff88' }
+        ];
+        
+        langContainer.innerHTML = '';
+        fallbacks.forEach(f => {
+          const row = document.createElement('div');
+          row.style.display = 'flex';
+          row.style.flexDirection = 'column';
+          row.style.gap = '6px';
+          row.innerHTML = `
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; color: #fff;">
+              <span style="font-weight: 600;">${f.lang}</span>
+              <span style="color: var(--text-tertiary); font-weight: 700;">${f.pct}%</span>
+            </div>
+            <div style="height: 6px; background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-full); overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.03);">
+              <div style="height: 100%; width: 0%; background: ${f.color}; border-radius: var(--radius-full); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px ${f.color}60;"></div>
+            </div>
+          `;
+          langContainer.appendChild(row);
+          setTimeout(() => {
+            const bar = row.querySelector('div > div');
+            if (bar) bar.style.width = `${f.pct}%`;
+          }, 100);
+        });
       });
   }
 

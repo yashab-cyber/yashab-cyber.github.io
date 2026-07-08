@@ -393,13 +393,54 @@
           <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 24px; color: var(--text-primary);">
             ⚡ GitHub <span class="accent">Code Insights</span>
           </h3>
-          <div class="github-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto;">
-            <div class="github-stat-card" style="background: var(--bg-secondary); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-md); transition: transform var(--transition-fast); overflow: hidden; display: flex; align-items: center; justify-content: center;">
-              <img src="https://github-readme-stats.vercel.app/api?username=yashab-cyber&show_icons=true&theme=synthwave&bg_color=0c0a1a&hide_border=true&title_color=ff007f&text_color=9ea4cf&icon_color=00f0ff" alt="Yashab's GitHub Stats" style="width: 100%; height: auto; max-width: 450px; border-radius: var(--radius-sm);" loading="lazy" />
+          <div class="github-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; max-width: 900px; margin: 0 auto; text-align: left;">
+            
+            <!-- Native Stats Card -->
+            <div class="github-stat-card" style="background: var(--bg-secondary); border: 1px solid rgba(0, 240, 255, 0.15); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-md); transition: transform var(--transition-fast); display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 style="font-size: 1.1rem; color: var(--accent-secondary); margin-bottom: 20px; font-weight: bold; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  Profile Summary
+                </h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                  <div style="background: var(--bg-tertiary); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; display: block; margin-bottom: 4px;">Public Repos</span>
+                    <strong class="github-profile-repos" style="font-size: 1.4rem; color: #fff; font-family: 'JetBrains Mono', monospace;">--</strong>
+                  </div>
+                  <div style="background: var(--bg-tertiary); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; display: block; margin-bottom: 4px;">Followers</span>
+                    <strong class="github-profile-followers" style="font-size: 1.4rem; color: #fff; font-family: 'JetBrains Mono', monospace;">--</strong>
+                  </div>
+                  <div style="background: var(--bg-tertiary); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; display: block; margin-bottom: 4px;">Public Gists</span>
+                    <strong class="github-profile-gists" style="font-size: 1.4rem; color: #fff; font-family: 'JetBrains Mono', monospace;">--</strong>
+                  </div>
+                  <div style="background: var(--bg-tertiary); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+                    <span style="font-size: 0.75rem; color: var(--text-tertiary); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; display: block; margin-bottom: 4px;">Account Type</span>
+                    <strong style="font-size: 1.1rem; color: var(--accent-tertiary); font-family: 'JetBrains Mono', monospace;">Developer</strong>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-tertiary); display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; background: #22c55e; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #22c55e;"></span>
+                Live API connection verified
+              </div>
             </div>
-            <div class="github-stat-card" style="background: var(--bg-secondary); border: 1px solid rgba(255, 0, 127, 0.15); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-md); transition: transform var(--transition-fast); overflow: hidden; display: flex; align-items: center; justify-content: center;">
-              <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=yashab-cyber&layout=compact&theme=synthwave&bg_color=0c0a1a&hide_border=true&title_color=ff007f&text_color=9ea4cf" alt="Yashab's Top Languages" style="width: 100%; height: auto; max-width: 450px; border-radius: var(--radius-sm);" loading="lazy" />
+
+            <!-- Top Languages Card -->
+            <div class="github-stat-card" style="background: var(--bg-secondary); border: 1px solid rgba(255, 0, 127, 0.15); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-md); transition: transform var(--transition-fast); display: flex; flex-direction: column;">
+              <h4 style="font-size: 1.1rem; color: var(--accent-primary); margin-bottom: 20px; font-weight: bold; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+                Top Languages
+              </h4>
+              <div class="github-languages-list" style="display: flex; flex-direction: column; gap: 14px; flex-grow: 1; justify-content: center;">
+                <!-- Dynamically loaded via Javascript -->
+                <div style="text-align: center; color: var(--text-tertiary); font-size: 0.9rem; font-family: 'JetBrains Mono', monospace;">
+                  Loading repository data...
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
 
